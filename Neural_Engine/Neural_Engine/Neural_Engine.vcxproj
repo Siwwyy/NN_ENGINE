@@ -150,12 +150,15 @@
     <ClCompile Include="src\Math\Algebra\Matrix.cpp" />
     <ClCompile Include="src\Math\Activation_Functions\Activation_Functions.cpp" />
     <ClCompile Include="src\Math\Algebra\Vector.cpp" />
+    <ClCompile Include="src\Math\Utils\Math_Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Core\Defines\Defines.hpp" />
     <ClInclude Include="include\Math\Activation_Functions\Activation_Functions.hpp" />
     <ClInclude Include="include\Math\Algebra\Matrix.hpp" />
     <ClInclude Include="include\Math\Algebra\Scalar.hpp" />
     <ClInclude Include="include\Math\Algebra\Vector.hpp" />
+    <ClInclude Include="include\Math\Utils\Math_Utils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,33 +1,75 @@
-﻿#ifndef _VECTOR_HPP_INCLUDED_
-#define _VECTOR_HPP_INCLUDED_
-#pragma once
+﻿#ifndef VECTOR_HPP_INCLUDED
+#define VECTOR_HPP_INCLUDED
+
 
 #include <vector>
-#include <xutility>
 
 #include "Scalar.hpp"
 
-namespace Math
+
+namespace NN
 {
-
-	template<typename T>
-	class Vector : private Scalar<T>
+	namespace Math
 	{
-	public:
-		
-		using value_type = Scalar<T>;
-		using pointer_type = Scalar<T>*;
-		using reference_type = Scalar<T>&;
 
-	private:
-		
-		std::vector<value_type> vector;
-	
-	public:
-		Vector() = delete;
+		template<typename T>
+		class Vector /*: private Scalar<T>*/
+		{
+		public:
 
-	};
+			using value_type = Scalar<T>;
+			using pointer_type = Scalar<T>*;
+			using reference_type = Scalar<T>&;
 
+		private:
+
+			std::vector<value_type> vector;
+
+		public:
+			Vector();
+			constexpr Vector(const std::initializer_list<value_type>& elems);
+
+#define HAS_ATTRIBUTES 1
+#include "Core/Defines/Defines.hpp"
+
+			NODISCARD constexpr const pointer_type begin() noexcept;
+			NODISCARD constexpr const pointer_type end() noexcept;
+
+			NODISCARD constexpr size_t size() const noexcept;
+
+#undef HAS_ATTRIBUTES
+
+		};
+
+		template <typename T>
+		Vector<T>::Vector() :
+			vector({})
+		{ }
+
+		template <typename T>
+		constexpr Vector<T>::Vector(const std::initializer_list<value_type>& elems) :
+			vector(elems)
+		{ }
+
+		template <typename T>
+		constexpr const typename Vector<T>::pointer_type Vector<T>::begin() noexcept
+		{
+			return &(*vector.begin());
+		}
+
+		template <typename T>
+		constexpr const typename Vector<T>::pointer_type Vector<T>::end() noexcept
+		{
+			return vector.end();
+		}
+
+		template <typename T>
+		constexpr size_t Vector<T>::size() const noexcept
+		{
+			return vector.size();
+		}
+
+	}
 }
 
-#endif /* _VECTOR_HPP_INCLUDED */
+#endif /* VECTOR_HPP_INCLUDED */

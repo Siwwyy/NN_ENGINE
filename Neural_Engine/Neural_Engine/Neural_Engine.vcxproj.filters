@@ -30,6 +30,9 @@
     <ClCompile Include="src\Math\Algebra\Scalar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Math\Utils\Math_Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Math\Activation_Functions\Activation_Functions.hpp">
@@ -42,6 +45,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Math\Algebra\Scalar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Utils\Math_Utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\Defines\Defines.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
