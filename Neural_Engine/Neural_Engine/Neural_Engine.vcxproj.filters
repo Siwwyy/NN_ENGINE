@@ -50,7 +50,10 @@
     <ClInclude Include="include\Math\Utils\Math_Utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\Defines\Defines.hpp">
+    <ClInclude Include="include\Core\Defines\Defines_Func_Attributes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\Defines\Defines_Assert.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

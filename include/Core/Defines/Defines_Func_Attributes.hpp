@@ -1,5 +1,5 @@
-#ifndef DEFINES_HPP_INCLUDED
-#define DEFINES_HPP_INCLUDED
+#ifndef DEFINES_FUNC_ATTRIBUTES_HPP_INCLUDED
+#define DEFINES_FUNC_ATTRIBUTES_HPP_INCLUDED
 
 
 /*
@@ -12,9 +12,11 @@
 #define MAYBE_UNUSED [[maybe_unused]]
 
 #if DEPRECATED_VERBOSE == 1
+
 #define DEPRECATED(str_msg) [[deprecated(str_msg)]]
 #else
 #define DEPRECATED [[deprecated]]
+
 #endif /* DEPRECATED_VERBOSE */
 
 #else
@@ -26,18 +28,4 @@
 #endif /* HAS_ATTRIBUTES */
 
 
-/*
-	For assertion, bug reporting etc.
- */
-#if ASSERTION == 1
-
-#define report(str_msg) std::cout << "Error at line: " << __LINE__ << " In file: " << __FILE__  << " Message: " << str_msg << '\n';
-
-#else
-
-#define report(x) 
-
-#endif /* ASSERTION */
-
-
-#endif /* DEFINES_HPP_INCLUDED */
+#endif /* DEFINES_FUNC_ATTRIBUTES_HPP_INCLUDED */

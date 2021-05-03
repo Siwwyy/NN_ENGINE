@@ -117,6 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Neural_Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,6 +135,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Neural_Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,7 +155,8 @@
     <ClCompile Include="src\Math\Utils\Math_Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Core\Defines\Defines.hpp" />
+    <ClInclude Include="include\Core\Defines\Defines_Assert.hpp" />
+    <ClInclude Include="include\Core\Defines\Defines_Func_Attributes.hpp" />
     <ClInclude Include="include\Math\Activation_Functions\Activation_Functions.hpp" />
     <ClInclude Include="include\Math\Algebra\Matrix.hpp" />
     <ClInclude Include="include\Math\Algebra\Scalar.hpp" />
