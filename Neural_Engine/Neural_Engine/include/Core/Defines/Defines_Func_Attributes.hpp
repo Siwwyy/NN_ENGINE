@@ -14,6 +14,7 @@
 #if DEPRECATED_VERBOSE == 1
 
 #define DEPRECATED(str_msg) [[deprecated(str_msg)]]
+
 #else
 #define DEPRECATED [[deprecated]]
 
@@ -26,6 +27,5 @@
 #define MAYBE_UNUSED
 
 #endif /* HAS_ATTRIBUTES */
-
 
 #endif /* DEFINES_FUNC_ATTRIBUTES_HPP_INCLUDED */
