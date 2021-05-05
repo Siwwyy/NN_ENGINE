@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\Activation_Functions\Activation_Functions.cpp">
+    <ClCompile Include="src\Math\Activation_Functions\Activation_Function.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Math\Algebra\Matrix.cpp">
@@ -35,7 +35,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Math\Activation_Functions\Activation_Functions.hpp">
+    <ClInclude Include="include\Math\Activation_Functions\Activation_Function.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Math\Algebra\Matrix.hpp">

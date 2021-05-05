@@ -38,6 +38,8 @@ namespace NN
 			constexpr Scalar& operator/=(const_type rhs) noexcept;
 			NODISCARD constexpr bool operator<(const_type rhs) const noexcept;
 			NODISCARD constexpr bool operator>(const_type rhs) const noexcept;
+			NODISCARD constexpr bool operator<=(const_type rhs) const noexcept;
+			NODISCARD constexpr bool operator>=(const_type rhs) const noexcept;
 			NODISCARD constexpr bool operator==(const_type rhs) const noexcept;
 			NODISCARD constexpr bool operator!=(const_type rhs) const noexcept;
 
@@ -47,6 +49,8 @@ namespace NN
 			constexpr Scalar& operator/=(const Scalar rhs) noexcept;
 			NODISCARD constexpr bool operator<(const Scalar rhs) const noexcept;
 			NODISCARD constexpr bool operator>(const Scalar rhs) const noexcept;
+			NODISCARD constexpr bool operator<=(const Scalar rhs) const noexcept;
+			NODISCARD constexpr bool operator>=(const Scalar rhs) const noexcept;
 			NODISCARD constexpr bool operator==(const Scalar rhs) const noexcept;
 			NODISCARD constexpr bool operator!=(const Scalar rhs) const noexcept;
 
@@ -68,8 +72,7 @@ namespace NN
 			friend std::ostream& operator<<(std::ostream& lhs, const Scalar& rhs) { return lhs << rhs.scalar_value << '\n'; }
 
 			NODISCARD constexpr value_type Get_Scalar_Value() const;
-#undef HAS_ATTRIBS
-			
+
 		};
 
 		template <typename T, typename T0>
@@ -121,6 +124,18 @@ namespace NN
 		constexpr bool Scalar<T, T0>::operator>(const_type rhs) const noexcept
 		{
 			return scalar_value > rhs;
+		}
+
+		template <typename T, typename T0>
+		constexpr bool Scalar<T, T0>::operator<=(const_type rhs) const noexcept
+		{
+			return scalar_value <= rhs;
+		}
+
+		template <typename T, typename T0>
+		constexpr bool Scalar<T, T0>::operator>=(const_type rhs) const noexcept
+		{
+			return scalar_value >= rhs;
 		}
 
 		template <typename T, typename T0>
@@ -176,6 +191,18 @@ namespace NN
 		}
 
 		template <typename T, typename T0>
+		constexpr bool Scalar<T, T0>::operator<=(const Scalar rhs) const noexcept
+		{
+			return scalar_value <= rhs.scalar_value;
+		}
+
+		template <typename T, typename T0>
+		constexpr bool Scalar<T, T0>::operator>=(const Scalar rhs) const noexcept
+		{
+			return scalar_value >= rhs.scalar_value;
+		}
+
+		template <typename T, typename T0>
 		constexpr bool Scalar<T, T0>::operator==(const Scalar rhs) const noexcept
 		{
 			return scalar_value == rhs.scalar_value;
@@ -197,4 +224,5 @@ namespace NN
 
 }
 
+#undef HAS_ATTRIBS
 #endif /* SCALAR_HPP_INCLUDED */

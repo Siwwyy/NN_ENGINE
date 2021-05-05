@@ -1,15 +1,17 @@
 #ifndef MATH_UTILS_HPP_INCLUDED
 #define MATH_UTILS_HPP_INCLUDED
 
+#include <iostream>
 
+
+
+#define HAS_ASSERTION 1
+#define HAS_ATTRIBUTES 1
 #include "Math/Algebra/Scalar.hpp"
 #include "Math/Algebra/Vector.hpp"
 
-#include <iostream>
 
-#define HAS_ASSERTION 1
 #include "Core/Defines/Defines_Assert.hpp"
-#define HAS_ATTRIBUTES 1
 #include "Core/Defines/Defines_Func_Attributes.hpp"
 
 
@@ -33,15 +35,47 @@ namespace NN
 			{
 				if (vector_t.size() == 0)
 				{
-					//report(("Vector size is equal to 0", vector_t.size() == 0));
-					report("dddd")
+					report("Vector size is equal to 0", vector_t.size() == 0);
+					return Scalar<T>(0);
+				}
 				
+				auto smallest_elem = *vector_t.begin();
+				for (const auto& elem : vector_t)
+				{
+					if (smallest_elem > elem)
+					{
+						smallest_elem = elem;
+					}
+				}
+				return smallest_elem;
+			}
+
+			template<typename T>
+			NODISCARD constexpr Scalar<T> max(Scalar<T> scalar_t) noexcept = delete;
+			template<typename T>
+			NODISCARD constexpr Scalar<T> max(Scalar<T> lhs, Scalar<T> rhs) noexcept
+			{
+				return lhs > rhs ? lhs : rhs;
+			}
+
+			template<typename T>
+			NODISCARD constexpr Scalar<T> max(Vector<T> vector_t) noexcept
+			{
+				if (vector_t.size() == 0)
+				{
+					report("Vector size is equal to 0", vector_t.size() == 0);
 					return Scalar<T>(0);
 				}
 
-				Scalar<T> elem = *(vector_t.begin());
-
-				return elem;
+				auto greatest_elem = *vector_t.begin();
+				for (const auto& elem : vector_t)
+				{
+					if (greatest_elem < elem)
+					{
+						greatest_elem = elem;
+					}
+				}
+				return greatest_elem;
 			}
 
 		}

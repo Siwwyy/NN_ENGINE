@@ -1,12 +1,11 @@
 ﻿#ifndef VECTOR_HPP_INCLUDED
 #define VECTOR_HPP_INCLUDED
 
-
 #include <vector>
 
-#include "Scalar.hpp"
-
 #define HAS_ATTRIBUTES 1
+#include "Scalar.hpp"
+#include "Core/Defines/Defines_Assert.hpp"
 
 
 namespace NN
@@ -22,6 +21,7 @@ namespace NN
 			using value_type = Scalar<T>;
 			using pointer_type = Scalar<T>*;
 			using reference_type = Scalar<T>&;
+			using size_type = std::size_t;
 
 		private:
 
@@ -31,11 +31,13 @@ namespace NN
 			Vector();
 			constexpr Vector(const std::initializer_list<value_type>& elems);
 
-			NODISCARD constexpr const pointer_type begin() noexcept;
-			NODISCARD constexpr const pointer_type end() noexcept;
+			void clear() noexcept;
+			NODISCARD constexpr auto index_of(const typename std::vector<value_type>::iterator& elem) noexcept;
+			NODISCARD constexpr auto begin() noexcept;
+			NODISCARD constexpr auto end() noexcept;
+			NODISCARD constexpr auto size() const noexcept;
 
-			NODISCARD constexpr size_t size() const noexcept;
-			
+			NODISCARD constexpr auto& operator[](const size_type elem_pos) noexcept;
 		};
 
 		template <typename T>
@@ -49,26 +51,44 @@ namespace NN
 		{ }
 
 		template <typename T>
-		constexpr const typename Vector<T>::pointer_type Vector<T>::begin() noexcept
+		void Vector<T>::clear() noexcept
 		{
-			return &(*vector.begin());
+			vector.clear();
 		}
 
 		template <typename T>
-		constexpr const typename Vector<T>::pointer_type Vector<T>::end() noexcept
+		constexpr auto Vector<T>::index_of(const typename std::vector<value_type>::iterator& elem) noexcept
+		{
+			return std::distance(vector.begin(), elem);
+		}
+
+		template <typename T>
+		constexpr auto Vector<T>::begin() noexcept
+		{
+			return vector.begin();
+		}
+
+		template <typename T>
+		constexpr auto Vector<T>::end() noexcept
 		{
 			return vector.end();
 		}
 
 		template <typename T>
-		constexpr size_t Vector<T>::size() const noexcept
+		constexpr auto Vector<T>::size() const noexcept
 		{
 			return vector.size();
+		}
+		
+		template <typename T>
+		constexpr auto& Vector<T>::operator[](const size_type elem_pos) noexcept
+		{
+			static_assert(elem_pos >= vector.size(), "vector subscript out of range");
+			return vector[elem_pos];
 		}
 
 	}
 }
 
 #undef HAS_ATTRIBUTES
-
 #endif /* VECTOR_HPP_INCLUDED */
