@@ -147,21 +147,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Math\Loss_Functions\MSE.cpp" />
+    <ClCompile Include="src\Math\Activation_Functions\ReLu.cpp" />
+    <ClCompile Include="src\Math\Activation_Functions\Identity_Function.cpp" />
+    <ClCompile Include="src\Math\Activation_Functions\Sigmoid.cpp" />
+    <ClCompile Include="src\Core\Layers\Dense\Dense.cpp" />
     <ClCompile Include="src\Math\Algebra\Scalar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Math\Algebra\Matrix.cpp" />
     <ClCompile Include="src\Math\Activation_Functions\Activation_Function.cpp" />
     <ClCompile Include="src\Math\Algebra\Vector.cpp" />
     <ClCompile Include="src\Math\Utils\Math_Utils.cpp" />
+    <ClCompile Include="src\Math\Utils\Random.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Layers\Layer_Base.hpp" />
+    <ClInclude Include="include\Model.hpp" />
+    <ClInclude Include="include\Math\Activation_Functions\Identity_Function.hpp" />
+    <ClInclude Include="include\Layers\Dense\Dense.hpp" />
     <ClInclude Include="include\Core\Defines\Defines_Assert.hpp" />
     <ClInclude Include="include\Core\Defines\Defines_Func_Attributes.hpp" />
     <ClInclude Include="include\Math\Activation_Functions\Activation_Function.hpp" />
+    <ClInclude Include="include\Math\Activation_Functions\ReLu.hpp" />
     <ClInclude Include="include\Math\Algebra\Matrix.hpp" />
     <ClInclude Include="include\Math\Algebra\Scalar.hpp" />
     <ClInclude Include="include\Math\Algebra\Vector.hpp" />
     <ClInclude Include="include\Math\Utils\Math_Utils.hpp" />
+    <ClInclude Include="include\Math\Activation_Functions\Sigmoid.hpp" />
+    <ClInclude Include="include\Math\Loss_Functions\MSE.hpp" />
+    <ClInclude Include="include\Math\Utils\Random.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

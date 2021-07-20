@@ -6,6 +6,10 @@
 #include "Math/Algebra/Scalar.hpp"
 #include "Math/Algebra/Vector.hpp"
 #include "Math/Utils/Math_Utils.hpp"
+#include "Math/Utils/Random.hpp"
+
+#include "Layers/Dense/Dense.hpp"
+#include "Model.hpp"
 
 
 //void foo(NN::Math::Scalar<int> param)
@@ -40,16 +44,16 @@ int main(int argc, char* argv[])
 
 	////a + 2;
 
-	NN::Math::Vector<int> vec = { 1,2,3,4,5,5,6,7 };
-	//NN::Math::Vector<int> vec;
-	std::vector dddddd{ 1,2,3,4,5,5 };
+	//NN::Math::Vector<int> vec = { 1,2,3,4,5,5,6,7 };
+	////NN::Math::Vector<int> vec;
+	//std::vector dddddd{ 1,2,3,4,5,5 };
 
-	auto dadad = dddddd[3];
-	auto dsd = NN::Math::Utils::min(vec);
-	dsd = NN::Math::Utils::max(vec);
+	//auto dadad = dddddd[3];
+	//auto dsd = NN::Math::Utils::min(vec);
+	//dsd = NN::Math::Utils::max(vec);
 
-	auto ddd = vec.begin();
-	
+	//auto ddd = vec.begin();
+
 	//std::vector<NN::Math::Scalar<int>> aaa;
 
 	////auto hhhh = &*aaa.begin();
@@ -73,6 +77,20 @@ int main(int argc, char* argv[])
 	//std::vector<int> h{};
 
 	//a = 2 * 2;
+
+
+	//NN::Math::Scalar<float> scalar_f = NN::Math::Utils::generate_random_numberF(0.f, 10.f);
+	//NN::Math::Vector<float> vec_f = NN::Math::Utils::generate_random_numbersF(0.f, 10.f,10);
+
+	//NN::Math::Scalar<int> scalar_i = NN::Math::Utils::generate_random_numberI(0, 10);
+	//NN::Math::Vector<int> vec_i = NN::Math::Utils::generate_random_numbersI(0, 10, 10);
+	//NN::Math::Vector<int> vec{};
+
+	NN::Model::Model<float> Mod;
+
+	Mod.add_layer(NN::Layers::Dense<float>());
+	Mod.add_layer(NN::Layers::Dense<float>());
+	Mod.add_layer(NN::Layers::Dense<float>());
 
 	system("pause");
 	return EXIT_SUCCESS;

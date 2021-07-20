@@ -1,5 +1,5 @@
-#ifndef _MATRIX_HPP_INCLUDED_
-#define _MATRIX_HPP_INCLUDED_
+#ifndef MATRIX_HPP_INCLUDED
+#define MATRIX_HPP_INCLUDED
 #pragma once
 
 #include <xutility>
@@ -22,4 +22,4 @@ namespace NN
 
 }
 
-#endif /* _MATRIX_HPP_INCLUDED_ */
+#endif /* MATRIX_HPP_INCLUDED */

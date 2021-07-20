@@ -11,8 +11,18 @@ namespace NN
 	class Activation_Function
 	{
 	public:
-		Activation_Function();
-		
+		using value_type = T;
+		using pointer_type = T*;
+		using reference_type = T&;
+
+		Activation_Function() {}
+		Activation_Function(const Activation_Function& Object) { *this = Object; }
+		Activation_Function(Activation_Function&& Object) noexcept { *this = std::move(Object); }
+
+		virtual T f(T x) noexcept = 0;
+		virtual T d_f(T x) noexcept = 0;
+
+		virtual ~Activation_Function() {}
 	};
 
 }
