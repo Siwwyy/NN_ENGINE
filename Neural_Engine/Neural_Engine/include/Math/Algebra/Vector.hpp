@@ -28,9 +28,14 @@ namespace NN
 			std::vector<value_type> vector;
 
 		public:
-			Vector();
+			constexpr Vector();
 			constexpr Vector(const std::initializer_list<value_type>& elems);
+			constexpr Vector(const std::size_t init_size);
 
+			void push_back(const value_type & scalar) noexcept;
+			void push_back(value_type& scalar) noexcept;
+			template <typename... Elems>
+			void emplace_back(Elems && ... elems) noexcept;
 			void clear() noexcept;
 			NODISCARD constexpr auto index_of(const typename std::vector<value_type>::iterator& elem) noexcept;
 			NODISCARD constexpr auto begin() noexcept;
@@ -41,7 +46,7 @@ namespace NN
 		};
 
 		template <typename T>
-		Vector<T>::Vector() :
+		constexpr Vector<T>::Vector() :
 			vector({})
 		{ }
 
@@ -49,6 +54,30 @@ namespace NN
 		constexpr Vector<T>::Vector(const std::initializer_list<value_type>& elems) :
 			vector(elems)
 		{ }
+
+		template <typename T>
+		constexpr Vector<T>::Vector(const std::size_t init_size) :
+			vector(init_size)
+		{ }
+
+		template <typename T>
+		void Vector<T>::push_back(const value_type& scalar) noexcept
+		{
+			vector.push_back(scalar);
+		}
+
+		template <typename T>
+		void Vector<T>::push_back(value_type& scalar) noexcept
+		{
+			vector.push_back(scalar);
+		}
+
+		template <typename T>
+		template <typename ... Elems>
+		void Vector<T>::emplace_back(Elems&&... elems) noexcept
+		{
+			vector.emplace(std::forward<Elems>(elems)...);
+		}
 
 		template <typename T>
 		void Vector<T>::clear() noexcept
@@ -79,7 +108,7 @@ namespace NN
 		{
 			return vector.size();
 		}
-		
+
 		template <typename T>
 		constexpr auto& Vector<T>::operator[](const size_type elem_pos) noexcept
 		{
