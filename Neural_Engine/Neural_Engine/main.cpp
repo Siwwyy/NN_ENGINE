@@ -97,7 +97,8 @@ int main(int argc, char* argv[])
 
 #include "Math/Utils/Math_Utils.hpp"
 
-	auto d = NN::Math::Utils::pow(NN::Math::Scalar<int>(10), 2);
+	auto d = NN::Math::Utils::pow(NN::Math::Scalar<float>(10.f), 2);
+	//auto d = NN::Math::Utils::pow(0, 2);
 
 	int c = NN::Math::Scalar<int>(10);
 

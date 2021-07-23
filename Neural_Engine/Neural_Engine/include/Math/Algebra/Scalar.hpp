@@ -12,7 +12,7 @@ namespace NN
 	namespace Math
 	{
 
-		template<typename T = int32_t, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
+		template<typename T = float, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
 		class Scalar
 		{
 		private:
@@ -78,7 +78,7 @@ namespace NN
 
 		template <typename T, typename T0>
 		inline constexpr Scalar<T, T0>::Scalar() :
-			scalar_value(static_cast<T>(0))
+			scalar_value(static_cast<T>(0.f))
 		{ }
 
 		template <typename T, typename T0>
