@@ -3,10 +3,9 @@
 
 #include <iostream>
 
-
-
 #define HAS_ASSERTION 1
 #define HAS_ATTRIBUTES 1
+
 #include "Math/Algebra/Scalar.hpp"
 #include "Math/Algebra/Vector.hpp"
 
@@ -38,7 +37,7 @@ namespace NN
 					report("Vector size is equal to 0", vector_t.size() == 0);
 					return Scalar<T>(0);
 				}
-				
+
 				auto smallest_elem = *vector_t.begin();
 				for (const auto& elem : vector_t)
 				{
@@ -76,6 +75,18 @@ namespace NN
 					}
 				}
 				return greatest_elem;
+			}
+
+			template<typename T>
+			NODISCARD Scalar<T> pow(T base, const uint32_t exponental) noexcept
+			{
+				return Scalar<T>(std::pow(base, exponental));
+			}
+
+			template<typename T>
+			NODISCARD Scalar<T> pow(Scalar<T> scalar_t, const uint32_t exponental) noexcept
+			{
+				return Scalar<T>(std::pow(scalar_t.Get_Scalar_Value(), exponental));
 			}
 
 		}

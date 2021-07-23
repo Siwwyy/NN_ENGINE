@@ -6,14 +6,19 @@
 
 namespace NN
 {
-
-	template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
-	class MSE
+	namespace Loss_Function
 	{
-	public:
 
-	};
+		template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
+		class MSE
+		{
+		private:
 
+		public:
+
+		};
+
+	}
 }
 
 #endif /* MSE_FUNCTION_HPP_INCLUDED */

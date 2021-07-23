@@ -8,25 +8,28 @@
 
 namespace NN
 {
-
-	template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
-	class Sigmoid : public Activation_Function<T>
+	namespace Functions
 	{
-	public:
-		T f(T x) noexcept override;
-		T d_f(T x) noexcept override;
-	};
+		template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
+		class Sigmoid : public Activation_Function<T>
+		{
+		public:
+			T f(T x) noexcept override;
+			T d_f(T x) noexcept override;
+		};
 
-	template <typename T, typename T0>
-	T Sigmoid<T, T0>::f(const T x) noexcept
-	{
-		return 1 / (1 + std::exp(-x));
-	}
+		template <typename T, typename T0>
+		T Sigmoid<T, T0>::f(const T x) noexcept
+		{
+			return 1 / (1 + std::exp(-x));
+		}
 
-	template <typename T, typename T0>
-	T Sigmoid<T, T0>::d_f(const T f_x) noexcept
-	{
-		return f_x * (1 - f_x);
+		template <typename T, typename T0>
+		T Sigmoid<T, T0>::d_f(const T f_x) noexcept
+		{
+			return f_x * (1 - f_x);
+		}
+
 	}
 }
 

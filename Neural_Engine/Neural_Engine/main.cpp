@@ -1,6 +1,9 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <array>
+#include <iomanip>
+
 
 
 #include "Math/Algebra/Scalar.hpp"
@@ -37,8 +40,79 @@
 //	}
 //};
 
+template<typename T, typename U, typename = std::enable_if_t<std::is_arithmetic_v<T>&& std::is_arithmetic_v<U>>>
+struct my_pair
+{
+	T first;
+	U second;
+
+	my_pair() = default;
+	my_pair(T first, U second) :
+		first(first),
+		second(second)
+	{ }
+};
+
+float halton(const int32_t index, const int32_t base)
+{
+	float result = 0.f;
+	float f = 1.f;
+	std::size_t i = index;
+
+	while (i > 0)
+	{
+		f /= static_cast<float>(base);
+		result += f * static_cast<float>((i % base));
+		i /= static_cast<std::size_t>(base);
+	}
+
+	return result;
+}
+
+my_pair<int32_t, int32_t> halton_idx(const int32_t idx, const int32_t scale)
+{
+	using type = int32_t;
+	return my_pair<type, type>(static_cast<type>(scale * halton(idx, 2)), static_cast<type>(scale * halton(idx, 3)));
+}
+
+std::vector<my_pair<int32_t, int32_t>> halton_seq(const int32_t length, const int32_t scale)
+{
+	using type = int32_t;
+	type idx = 0;
+	std::vector<my_pair<type, type>> halton_sequence(length); //DAndrysiak: Vector of halton sequence (x,y)
+	std::generate_n(halton_sequence.begin(), length, [&]() { idx++; return halton_idx(idx, scale); });	//DAndrysiak: idx++, We start from 1st element of halton, not 0th
+	return halton_sequence;
+}
+
+
+
 int main(int argc, char* argv[])
 {
+	using current_type = float;
+	NN::Model::Model<current_type> Mod{};
+
+	Mod.add_layer(NN::Layers::Dense<current_type>(3));
+	Mod.add_layer(NN::Layers::Dense<current_type>(3));
+	Mod.add_layer(NN::Layers::Dense<current_type>(3));
+
+#include "Math/Utils/Math_Utils.hpp"
+
+	auto d = NN::Math::Utils::pow(NN::Math::Scalar<int>(10), 2);
+
+	int c = NN::Math::Scalar<int>(10);
+
+	int a{};
+
+
+	//auto out = halton_seq(8, 3);
+
+	//for (const auto& elem : out)
+	//{
+	//	std::cout << "[ " << elem.first << " , " << elem.second << " ]\n";
+	//}
+
+
+
 	//NN::Math::Scalar<int> a(10);
 	//NN::Math::Scalar<int> v = a / 2;
 
@@ -86,11 +160,45 @@ int main(int argc, char* argv[])
 	//NN::Math::Vector<int> vec_i = NN::Math::Utils::generate_random_numbersI(0, 10, 10);
 	//NN::Math::Vector<int> vec{};
 
-	NN::Model::Model<float> Mod;
 
-	Mod.add_layer(NN::Layers::Dense<float>());
-	Mod.add_layer(NN::Layers::Dense<float>());
-	Mod.add_layer(NN::Layers::Dense<float>());
+
+
+//	//Creating a circle
+//	//Rotate around the origin point 0.0
+//#include <cmath>
+//
+//#define PI 3.14159265f
+//
+//	constexpr float radius = 5.f;
+//	constexpr float angle = 20.f;
+//	constexpr std::size_t points_amount = 10;
+//
+//	std::pair<float, float> vec{ 0.f, radius };
+//	std::vector<std::pair<float, float>> points;
+//
+//	for (size_t i = 0; i < points_amount; ++i)
+//	{
+//		if (i == 0)
+//		{
+//			points.emplace_back(vec);
+//		}
+//		else
+//		{
+//			const float a = std::cos((angle * PI) / 180.f) * vec.first + ((-1 * std::sin((angle * PI) / 180.f)) * vec.second);
+//			const float b = std::sin((angle * PI) / 180.f) * vec.first + (std::cos((angle * PI) / 180.f) * vec.second);
+//			vec.first = a;
+//			vec.second = b;
+//			points.emplace_back(vec);
+//		}
+//	}
+//
+//	for (size_t i = 0; i < points_amount; ++i)
+//	{
+//		std::cout << "X: " << points[i].first << " Y: " << points[i].second << '\n';
+//	}
+
+
+
 
 	system("pause");
 	return EXIT_SUCCESS;

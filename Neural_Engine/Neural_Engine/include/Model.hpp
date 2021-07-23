@@ -17,20 +17,34 @@ namespace NN
 		class Model
 		{
 		private:
-			NN::Math::Vector<Layers::Layer_Base<T>> layers;
-		public:
-			Model() {};
 
-			template<typename U>
-			void add_layer(U&& layers) noexcept;
+			NN::Math::Vector<Layers::Layer_Base<T>> layers;
+			//NN::Math::
+
+		public:
+			Model() = default;
+			template<typename ... U>
+			explicit Model(U&& ... layer) noexcept;
+
+			template<typename ... U>
+			void add_layer(U&& ... layer) noexcept;
+
+
 		};
 
 		template <typename T, typename T0>
-		template <typename U>
-		void Model<T, T0>::add_layer(U&& layers) noexcept
+		template <typename ... U>
+		Model<T, T0>::Model(U&&... layer) noexcept :
+			layers(std::forward<U>(layer)...)
+		{ }
+
+		template <typename T, typename T0>
+		template <typename ... U>
+		void Model<T, T0>::add_layer(U&& ... layer) noexcept
 		{
-			this->layers.emplace_back(layers);
+			layers.emplace_back(std::forward<U>(layer)...);
 		}
+
 	}
 
 }

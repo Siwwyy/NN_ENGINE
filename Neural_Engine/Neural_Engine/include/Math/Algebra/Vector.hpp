@@ -12,15 +12,25 @@ namespace NN
 {
 	namespace Math
 	{
+		template<typename T>
+		class Vector;		//FORWARD DECLARATION
 
 		template<typename T>
-		class Vector /*: private Scalar<T>*/
+		using Vector_Arithmetic = Vector<Scalar<T>>;
+
+		template<typename T>
+		class Vector
 		{
 		public:
 
-			using value_type = Scalar<T>;
-			using pointer_type = Scalar<T>*;
-			using reference_type = Scalar<T>&;
+			//using value_type = Scalar<T>;
+			//using pointer_type = Scalar<T>*;
+			//using reference_type = Scalar<T>&;
+			//using size_type = std::size_t;
+
+			using value_type = T;
+			using pointer_type = T*;
+			using reference_type = T&;
 			using size_type = std::size_t;
 
 		private:
@@ -32,7 +42,7 @@ namespace NN
 			constexpr Vector(const std::initializer_list<value_type>& elems);
 			constexpr Vector(const std::size_t init_size);
 
-			void push_back(const value_type & scalar) noexcept;
+			void push_back(const value_type& scalar) noexcept;
 			void push_back(value_type& scalar) noexcept;
 			template <typename... Elems>
 			void emplace_back(Elems && ... elems) noexcept;
@@ -76,7 +86,7 @@ namespace NN
 		template <typename ... Elems>
 		void Vector<T>::emplace_back(Elems&&... elems) noexcept
 		{
-			vector.emplace(std::forward<Elems>(elems)...);
+			vector.emplace_back(std::forward<Elems>(elems)...);
 		}
 
 		template <typename T>
@@ -115,6 +125,10 @@ namespace NN
 			static_assert(elem_pos >= vector.size(), "vector subscript out of range");
 			return vector[elem_pos];
 		}
+
+
+
+
 
 	}
 }

@@ -6,24 +6,27 @@
 
 namespace NN
 {
-
-	template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
-	class Activation_Function
+	namespace Functions
 	{
-	public:
-		using value_type = T;
-		using pointer_type = T*;
-		using reference_type = T&;
+		template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
+		class Activation_Function
+		{
+		public:
+			using value_type = T;
+			using pointer_type = T*;
+			using reference_type = T&;
 
-		Activation_Function() {}
-		Activation_Function(const Activation_Function& Object) { *this = Object; }
-		Activation_Function(Activation_Function&& Object) noexcept { *this = std::move(Object); }
+			Activation_Function() {}
+			Activation_Function(const Activation_Function& Object) { *this = Object; }
+			Activation_Function(Activation_Function&& Object) noexcept { *this = std::move(Object); }
 
-		virtual T f(T x) noexcept = 0;
-		virtual T d_f(T x) noexcept = 0;
+			virtual T f(T x) noexcept = 0;
+			virtual T d_f(T x) noexcept = 0;
 
-		virtual ~Activation_Function() {}
-	};
+			virtual ~Activation_Function() {}
+		};
+
+	}
 
 }
 

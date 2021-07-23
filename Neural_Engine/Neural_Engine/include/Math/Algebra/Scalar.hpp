@@ -12,7 +12,7 @@ namespace NN
 	namespace Math
 	{
 
-		template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
+		template<typename T = int32_t, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
 		class Scalar
 		{
 		private:
@@ -31,7 +31,7 @@ namespace NN
 			constexpr Scalar();
 			constexpr Scalar(const value_type scalar_value);
 
-			NODISCARD constexpr explicit operator value_type() const noexcept;
+			NODISCARD constexpr operator value_type() const noexcept;
 
 			constexpr Scalar& operator+=(const_type rhs) noexcept;
 			constexpr Scalar& operator-=(const_type rhs) noexcept;
@@ -77,17 +77,17 @@ namespace NN
 		};
 
 		template <typename T, typename T0>
-		constexpr Scalar<T, T0>::Scalar() :
+		inline constexpr Scalar<T, T0>::Scalar() :
 			scalar_value(static_cast<T>(0))
 		{ }
 
 		template <typename T, typename T0>
-		constexpr Scalar<T, T0>::Scalar(const T scalar_value) :
+		inline constexpr Scalar<T, T0>::Scalar(const T scalar_value) :
 			scalar_value(scalar_value)
 		{ }
 
-		template <typename T, typename T0>
-		constexpr Scalar<T, T0>::operator T() const noexcept
+		template<typename T, typename T0>
+		inline constexpr Scalar<T, T0>::operator value_type() const noexcept
 		{
 			return scalar_value;
 		}
