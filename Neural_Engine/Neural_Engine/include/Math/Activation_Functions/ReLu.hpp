@@ -2,33 +2,58 @@
 #define RELU_FUNCTION_HPP_INCLUDED
 #pragma once
 
-#include "Activation_Function.hpp"
+#include <memory>
+
+#include "Activation_Function_Base.hpp"
 
 namespace NN
 {
-
-	template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
-	class ReLu : public Activation_Function<T>
+	namespace Math
 	{
-	public:
-		T f(T x) noexcept override;
-		T d_f(T x) noexcept override;
-	};
+		namespace Activation_Functions
+		{
+			
+			template<typename T>
+			class ReLu_impl : public Activation_Function_Base<T>
+			{
+			public:
+				
+				T f(T x) noexcept override;
+				T d_f(T x) noexcept override;
+				
+			};
 
-	template <typename T, typename T0>
-	T ReLu<T, T0>::f(T x) noexcept
-	{
-		T zero = static_cast<T>(0);
-		return x > zero ? x : zero;
+			template <typename T>
+			T ReLu_impl<T>::f(T x) noexcept
+			{
+				T zero = static_cast<T>(0);
+				return x > zero ? x : zero;
+			}
+
+			template <typename T>
+			T ReLu_impl<T>::d_f(T x) noexcept
+			{
+				T zero = static_cast<T>(0);
+				return x > zero ? 1 : zero;
+			}
+
+			template<typename T>
+			class ReLu_fn
+			{
+			public:
+
+				std::unique_ptr<ReLu_impl<T>> operator()() const
+				{
+					return std::make_unique<ReLu_impl<T>>();
+				}
+
+			};
+
+			template<typename T>
+			inline constexpr ReLu_fn<T> ReLu;
+			
+		}
 	}
-
-	template <typename T, typename T0>
-	T ReLu<T, T0>::d_f(T x) noexcept
-	{
-		T zero = static_cast<T>(0);
-		return x > zero ? 1 : zero;
-	}
-
 }
 
 #endif /* RELU_FUNCTION_HPP_INCLUDED */

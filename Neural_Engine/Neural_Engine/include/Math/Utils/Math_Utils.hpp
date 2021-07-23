@@ -3,10 +3,9 @@
 
 #include <iostream>
 
-
-
 #define HAS_ASSERTION 1
 #define HAS_ATTRIBUTES 1
+
 #include "Math/Algebra/Scalar.hpp"
 #include "Math/Algebra/Vector.hpp"
 
@@ -23,22 +22,22 @@ namespace NN
 		{
 
 			template<typename T>
-			NODISCARD constexpr Scalar<T> min(Scalar<T> scalar_t) noexcept = delete;
+			NODISCARD constexpr Algebra::Scalar<T> min(Algebra::Scalar<T> scalar_t) noexcept = delete;
 			template<typename T>
-			NODISCARD constexpr Scalar<T> min(Scalar<T> lhs, Scalar<T> rhs) noexcept
+			NODISCARD constexpr Algebra::Scalar<T> min(Algebra::Scalar<T> lhs, Algebra::Scalar<T> rhs) noexcept
 			{
 				return lhs < rhs ? lhs : rhs;
 			}
 
 			template<typename T>
-			NODISCARD constexpr Scalar<T> min(Vector<T> vector_t) noexcept
+			NODISCARD constexpr Algebra::Scalar<T> min(Algebra::Vector<T> vector_t) noexcept
 			{
 				if (vector_t.size() == 0)
 				{
 					report("Vector size is equal to 0", vector_t.size() == 0);
-					return Scalar<T>(0);
+					return NN::Math::Algebra::Scalar<T>(0);
 				}
-				
+
 				auto smallest_elem = *vector_t.begin();
 				for (const auto& elem : vector_t)
 				{
@@ -51,20 +50,20 @@ namespace NN
 			}
 
 			template<typename T>
-			NODISCARD constexpr Scalar<T> max(Scalar<T> scalar_t) noexcept = delete;
+			NODISCARD constexpr Algebra::Scalar<T> max(Algebra::Scalar<T> scalar_t) noexcept = delete;
 			template<typename T>
-			NODISCARD constexpr Scalar<T> max(Scalar<T> lhs, Scalar<T> rhs) noexcept
+			NODISCARD constexpr Algebra::Scalar<T> max(Algebra::Scalar<T> lhs, Algebra::Scalar<T> rhs) noexcept
 			{
 				return lhs > rhs ? lhs : rhs;
 			}
 
 			template<typename T>
-			NODISCARD constexpr Scalar<T> max(Vector<T> vector_t) noexcept
+			NODISCARD constexpr Algebra::Scalar<T> max(Algebra::Vector<T> vector_t) noexcept
 			{
 				if (vector_t.size() == 0)
 				{
 					report("Vector size is equal to 0", vector_t.size() == 0);
-					return Scalar<T>(0);
+					return NN::Math::Algebra::Scalar<T>(0);
 				}
 
 				auto greatest_elem = *vector_t.begin();
@@ -76,6 +75,18 @@ namespace NN
 					}
 				}
 				return greatest_elem;
+			}
+
+			template<typename T>
+			NODISCARD Algebra::Scalar<T> pow(T base, const uint32_t exponental) noexcept
+			{
+				return Algebra::Scalar<T>(std::pow(base, exponental));
+			}
+
+			template<typename T>
+			NODISCARD Algebra::Scalar<T> pow(Algebra::Scalar<T> scalar_t, const uint32_t exponental) noexcept
+			{
+				return Algebra::Scalar<T>(std::pow(scalar_t.Get_Scalar_Value(), exponental));
 			}
 
 		}
