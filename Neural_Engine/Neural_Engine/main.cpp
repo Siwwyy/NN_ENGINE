@@ -11,8 +11,10 @@
 #include "Math/Utils/Math_Utils.hpp"
 #include "Math/Utils/Random.hpp"
 
-#include "Layers/Dense/Dense.hpp"
+#include "Core/Layers/Dense/Dense.hpp"
 #include "Model.hpp"
+#include "Math/Activation_Functions/Identity_Function.hpp"
+#include "Math/Loss_Functions/SEF.hpp"
 
 
 //void foo(NN::Math::Scalar<int> param)
@@ -91,11 +93,15 @@ int main(int argc, char* argv[])
 	using current_type = float;
 	NN::Model::Model<current_type> Mod{};
 
-	Mod.add_layer(NN::Layers::Dense<current_type>(3));
-	Mod.add_layer(NN::Layers::Dense<current_type>(3));
-	Mod.add_layer(NN::Layers::Dense<current_type>(3));
-	
+	Mod.add_layer(NN::Core::Layers::Dense<current_type>(2, NN::Math::Activation_Functions::Identity_Function<current_type>()));
+	Mod.add_layer(NN::Core::Layers::Dense<current_type>(2, NN::Math::Activation_Functions::Identity_Function<current_type>()));
+	Mod.add_layer(NN::Core::Layers::Dense<current_type>(2,  NN::Math::Activation_Functions::Identity_Function<current_type>()));
 
+	Mod.compile(NN::Math::Loss_Functions::SEF<current_type>());
+	
+	//auto dddd = NN::Core::Layers::Dense<current_type>(2, NN::Math::Activation_Functions::Sigmoid<current_type>{});
+	//Mod.compile(NN::Math::Loss_Functions::)
+	
 //#include "Math/Utils/Math_Utils.hpp"
 //
 //	auto d = NN::Math::Utils::pow(NN::Math::Scalar<int>(10), 2);
@@ -206,110 +212,110 @@ int main(int argc, char* argv[])
 	return EXIT_SUCCESS;
 }
 
-
-////SIMPLE PERCEPTRON
+//
+//////SIMPLE PERCEPTRON
+////
+////
+////#include <iostream>
+////#include <string>
+////#include <iterator>
+////#include <type_traits>
+////#include <vector>
+////#include <random>
+////
+////using type = float_t;
+////using container_type = std::pair<type, type>;
+////using container = std::vector<container_type>;
+////
+////template<typename T = type>
+////container_type data_point(const T x_min, const T x_max, const T y_min, const T y_max);
+////template<typename T = type>
+////container_type data_point(const T x_min, const T x_max, const T y_min, const T y_max, std::true_type);
+////template<typename T = type>
+////container_type data_point(const T x_min, const T x_max, const T y_min, const T y_max, std::false_type);
+////
+////container_type generate_data_point(const type x_min, const type x_max, const type y_min, const type y_max);
+////container generate_dataset(const size_t size);
+////
+////type sign(const type value);
+////float generate_weight_value();
+////bool validation(const float* const values, const bool* const true_values);
+////
+////int main(int argc, char* argv[])
+////{
+////
+////	container training_dataset = generate_dataset(200);
+////	auto w1 = generate_weight_value();
+////	auto w2 = generate_weight_value();
+////
+////
+////	//auto a = std::min_element(training_dataset.begin(), training_dataset.end(), [](auto lhs, auto rhs)
+////	//	{
+////	//		return std::get<1>(lhs) > std::get<1>(rhs);
+////	//	});
+////
+////
+////	constexpr float E = 0.0001f;
+////	constexpr float learning_rate = 0.1f;
+////	bool learning = true;
+////
+////	while (learning)
+////	{
+////		learning = false;
+////
+////		for (size_t i = 0; i < training_dataset.size(); ++i)
+////		{
+////			auto point = training_dataset[i];
+////			float u = (w1 * point.first) + (w2 * point.second);
+////			float y = sign(u);
+////
+////			if (point.second < 0.f && y > 0.f)
+////			{
+////				w1 = w1 - learning_rate * point.first;
+////				w2 = w2 - learning_rate * point.second;
+////				learning = true;
+////			}
+////			else if (point.second > 0.f && y < 0.f)
+////			{
+////				w1 = w1 + learning_rate * point.first;
+////				w2 = w2 + learning_rate * point.second;
+////				learning = true;
+////			}
+////		}
+////
+////
+////	}
+////
+////	std::cout << "Learned first weight: " << w1 << '\n';
+////	std::cout << "Learned second weight: " << w2 << '\n';
+////
+////
+////	container test_dataset = { std::make_pair(1.f, 1.f), std::make_pair(1.f, -1.f), std::make_pair(1.f, 2.f), std::make_pair(1.f, -2.f) };
+////
+////	const float test_values[] = { test_dataset[0].second * w2, test_dataset[1].second * w2,test_dataset[2].second * w2, test_dataset[3].second * w2 };
+////	const bool true_values[] = { 1, 0, 1, 0 };
+////	bool values_dataset[] = { 0,0,0,0 };
+////
+////
+////	for (size_t i = 0; i < 4; ++i)
+////	{
+////		if (test_dataset[i].second * w2 <= 0)
+////		{
+////			values_dataset[i] = false;
+////		}
+////		else
+////		{
+////			values_dataset[i] = true;
+////		}
+////	}
+////
+////	auto ddd = 0.00001f * w2;
+////	system("pause");
+////	return EXIT_SUCCESS;
+////}
+////
 //
 //
-//#include <iostream>
-//#include <string>
-//#include <iterator>
-//#include <type_traits>
-//#include <vector>
-//#include <random>
-//
-//using type = float_t;
-//using container_type = std::pair<type, type>;
-//using container = std::vector<container_type>;
-//
-//template<typename T = type>
-//container_type data_point(const T x_min, const T x_max, const T y_min, const T y_max);
-//template<typename T = type>
-//container_type data_point(const T x_min, const T x_max, const T y_min, const T y_max, std::true_type);
-//template<typename T = type>
-//container_type data_point(const T x_min, const T x_max, const T y_min, const T y_max, std::false_type);
-//
-//container_type generate_data_point(const type x_min, const type x_max, const type y_min, const type y_max);
-//container generate_dataset(const size_t size);
-//
-//type sign(const type value);
-//float generate_weight_value();
-//bool validation(const float* const values, const bool* const true_values);
-//
-//int main(int argc, char* argv[])
-//{
-//
-//	container training_dataset = generate_dataset(200);
-//	auto w1 = generate_weight_value();
-//	auto w2 = generate_weight_value();
-//
-//
-//	//auto a = std::min_element(training_dataset.begin(), training_dataset.end(), [](auto lhs, auto rhs)
-//	//	{
-//	//		return std::get<1>(lhs) > std::get<1>(rhs);
-//	//	});
-//
-//
-//	constexpr float E = 0.0001f;
-//	constexpr float learning_rate = 0.1f;
-//	bool learning = true;
-//
-//	while (learning)
-//	{
-//		learning = false;
-//
-//		for (size_t i = 0; i < training_dataset.size(); ++i)
-//		{
-//			auto point = training_dataset[i];
-//			float u = (w1 * point.first) + (w2 * point.second);
-//			float y = sign(u);
-//
-//			if (point.second < 0.f && y > 0.f)
-//			{
-//				w1 = w1 - learning_rate * point.first;
-//				w2 = w2 - learning_rate * point.second;
-//				learning = true;
-//			}
-//			else if (point.second > 0.f && y < 0.f)
-//			{
-//				w1 = w1 + learning_rate * point.first;
-//				w2 = w2 + learning_rate * point.second;
-//				learning = true;
-//			}
-//		}
-//
-//
-//	}
-//
-//	std::cout << "Learned first weight: " << w1 << '\n';
-//	std::cout << "Learned second weight: " << w2 << '\n';
-//
-//
-//	container test_dataset = { std::make_pair(1.f, 1.f), std::make_pair(1.f, -1.f), std::make_pair(1.f, 2.f), std::make_pair(1.f, -2.f) };
-//
-//	const float test_values[] = { test_dataset[0].second * w2, test_dataset[1].second * w2,test_dataset[2].second * w2, test_dataset[3].second * w2 };
-//	const bool true_values[] = { 1, 0, 1, 0 };
-//	bool values_dataset[] = { 0,0,0,0 };
-//
-//
-//	for (size_t i = 0; i < 4; ++i)
-//	{
-//		if (test_dataset[i].second * w2 <= 0)
-//		{
-//			values_dataset[i] = false;
-//		}
-//		else
-//		{
-//			values_dataset[i] = true;
-//		}
-//	}
-//
-//	auto ddd = 0.00001f * w2;
-//	system("pause");
-//	return EXIT_SUCCESS;
-//}
-//
-
-
 ////SIMPLE BACKPROP NETWORK 2-2-2
 //
 //
