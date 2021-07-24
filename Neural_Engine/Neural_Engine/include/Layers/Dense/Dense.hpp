@@ -20,12 +20,7 @@ namespace NN
 		{
 		private:
 
-			const std::size_t neurons_amount;
 
-			NN::Math::Vector<T> weights;
-			NN::Math::Vector<T> biases;
-
-			std::unique_ptr<NN::Functions::Activation_Function<T>> function;
 		public:
 			Dense() = default;
 			constexpr Dense(const std::size_t neurons_amount) noexcept;
@@ -34,18 +29,8 @@ namespace NN
 
 		template <typename T, typename T0>
 		constexpr Dense<T, T0>::Dense(const std::size_t neurons_amount) noexcept :
-			neurons_amount(neurons_amount),
-			//weights(NN::Math::Utils::pow(neurons_amount, 2)),
-			weights(neurons_amount * neurons_amount),
-			biases(neurons_amount)
+			Layer_Base<T>(neurons_amount)
 		{ }
-
-		//template <typename T, typename T0>
-		//Dense<T, T0>::Dense() :
-		//	weights({}),
-		//	biases({}),
-		//	function(std::make_unique<NN::Functions::Sigmoid<T>>())
-		//{ }
 
 	}
 }

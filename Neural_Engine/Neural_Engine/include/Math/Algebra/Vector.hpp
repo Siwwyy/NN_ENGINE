@@ -16,7 +16,7 @@ namespace NN
 		class Vector;		//FORWARD DECLARATION
 
 		template<typename T>
-		using Vector_Arithmetic = Vector<Scalar<T>>;
+		using Vector_Arithmetic = Vector<Scalar<T>>; //For scalar values e.g. 10, 203.32, 0.321, 1, 3, ...
 
 		template<typename T>
 		class Vector

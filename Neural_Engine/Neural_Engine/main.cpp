@@ -94,15 +94,16 @@ int main(int argc, char* argv[])
 	Mod.add_layer(NN::Layers::Dense<current_type>(3));
 	Mod.add_layer(NN::Layers::Dense<current_type>(3));
 	Mod.add_layer(NN::Layers::Dense<current_type>(3));
+	
 
-#include "Math/Utils/Math_Utils.hpp"
-
-	auto d = NN::Math::Utils::pow(NN::Math::Scalar<float>(10.f), 2);
-	//auto d = NN::Math::Utils::pow(0, 2);
-
-	int c = NN::Math::Scalar<int>(10);
-
-	int a{};
+//#include "Math/Utils/Math_Utils.hpp"
+//
+//	auto d = NN::Math::Utils::pow(NN::Math::Scalar<int>(10), 2);
+//	//auto d = NN::Math::Utils::pow(0, 2);
+//
+//	int c = NN::Math::Scalar<int>(10);
+//
+//	int a{};
 
 
 	//auto out = halton_seq(8, 3);
