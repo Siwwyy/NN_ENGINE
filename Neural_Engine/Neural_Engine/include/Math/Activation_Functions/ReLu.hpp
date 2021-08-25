@@ -12,15 +12,13 @@ namespace NN
 	{
 		namespace Activation_Functions
 		{
-			
-			template<typename T>
+			template <typename T>
 			class ReLu_impl : public Activation_Function_Base<T>
 			{
 			public:
-				
+
 				T f(T x) noexcept override;
 				T d_f(T x) noexcept override;
-				
 			};
 
 			template <typename T>
@@ -37,7 +35,7 @@ namespace NN
 				return x > zero ? 1 : zero;
 			}
 
-			template<typename T>
+			template <typename T>
 			class ReLu_fn
 			{
 			public:
@@ -46,12 +44,10 @@ namespace NN
 				{
 					return std::make_unique<ReLu_impl<T>>();
 				}
-
 			};
 
-			template<typename T>
+			template <typename T>
 			inline constexpr ReLu_fn<T> ReLu;
-			
 		}
 	}
 }

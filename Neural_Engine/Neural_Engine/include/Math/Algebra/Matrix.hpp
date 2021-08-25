@@ -6,23 +6,18 @@
 
 namespace NN
 {
-	
 	namespace Math
 	{
 		namespace Algebra
 		{
-
-			template<typename T>
+			template <typename T>
 			class Matrix
 			{
 			public:
 				Matrix();
-
 			};
-
 		}
 	}
-
 }
 
 #endif /* MATRIX_HPP_INCLUDED */

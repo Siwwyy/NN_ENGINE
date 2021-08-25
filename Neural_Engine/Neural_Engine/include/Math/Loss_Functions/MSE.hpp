@@ -12,30 +12,48 @@ namespace NN
 	{
 		namespace Loss_Functions
 		{
-			
-			template<typename T>
+			template <typename T>
 			class MSE_impl : public Loss_Function_Base<T>
 			{
 			public:
-				
-				virtual T f(T value, T target) noexcept override;
-				virtual T d_f(T value, T target) noexcept override;
+				typename Loss_Function_Base<T>::Return_Type f(Algebra::Vector_Arithmetic<T> value,
+				                                              Algebra::Vector_Arithmetic<T> target) noexcept override;
+				typename Loss_Function_Base<T>::Return_Type d_f(Algebra::Vector_Arithmetic<T> value,
+				                                                Algebra::Vector_Arithmetic<T> target) noexcept override;
 
+				//virtual T f(T value, T target) noexcept override;
+				//virtual T d_f(T value, T target) noexcept override;
 			};
 
+			//template <typename T>
+			//T MSE_impl<T>::f(T value, T target) noexcept
+			//{
+			//	return 0;
+			//}
+
+			//template <typename T>
+			//T MSE_impl<T>::d_f(T value, T target) noexcept
+			//{
+			//	return 0;
+			//}
+
 			template <typename T>
-			T MSE_impl<T>::f(T value, T target) noexcept
+			typename Loss_Function_Base<T>::Return_Type MSE_impl<T>::f(Algebra::Vector_Arithmetic<T> value,
+			                                                           Algebra::Vector_Arithmetic<T> target) noexcept
 			{
-				return 0;
+				typename Loss_Function_Base<T>::Return_Type Loss_Values{};
+				return Loss_Values;
 			}
 
 			template <typename T>
-			T MSE_impl<T>::d_f(T value, T target) noexcept
+			typename Loss_Function_Base<T>::Return_Type MSE_impl<T>::d_f(Algebra::Vector_Arithmetic<T> value,
+			                                                             Algebra::Vector_Arithmetic<T> target) noexcept
 			{
-				return 0;
+				typename Loss_Function_Base<T>::Return_Type Loss_Values{};
+				return Loss_Values;
 			}
 
-			template<typename T>
+			template <typename T>
 			class MSE_fn
 			{
 			public:
@@ -44,12 +62,10 @@ namespace NN
 				{
 					return std::make_unique<MSE_impl<T>>();
 				}
-
 			};
 
-			template<typename T>
+			template <typename T>
 			inline constexpr MSE_fn<T> MSE;
-			
 		}
 	}
 }

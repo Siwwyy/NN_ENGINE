@@ -9,9 +9,6 @@ namespace NN
 	{
 		namespace NN_AutoGrad
 		{
-
-
-
 		}
 	}
 }
