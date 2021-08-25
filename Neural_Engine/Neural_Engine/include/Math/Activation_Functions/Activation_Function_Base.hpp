@@ -10,7 +10,7 @@ namespace NN
 	{
 		namespace Activation_Functions
 		{
-			template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
+			template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
 			class Activation_Function_Base
 			{
 			public:
@@ -30,7 +30,6 @@ namespace NN
 
 				virtual ~Activation_Function_Base() = default;
 			};
-			
 		}
 	}
 }

@@ -12,8 +12,7 @@ namespace NN
 	{
 		namespace Activation_Functions
 		{
-			
-			template<typename T>
+			template <typename T>
 			class Sigmoid_impl : public Activation_Function_Base<T>
 			{
 			public:
@@ -33,7 +32,7 @@ namespace NN
 				return f_x * (1 - f_x);
 			}
 
-			template<typename T>
+			template <typename T>
 			class Sigmoid_fn
 			{
 			public:
@@ -42,18 +41,15 @@ namespace NN
 				{
 					return std::make_unique<Sigmoid_impl<T>>();
 				}
-
 			};
 
-			template<typename T>
+			template <typename T>
 			inline constexpr Sigmoid_fn<T> Sigmoid;
-			
 		}
 	}
 }
 
 #endif /* SIGMOID_FUNCTION_HPP_INCLUDED */
-
 
 
 //#ifndef MODEL_HPP_INCLUDED
@@ -94,7 +90,6 @@ namespace NN
 //}
 //
 //#endif /* MODEL_HPP_INCLUDED */
-
 
 
 //#ifndef LAYER_BASE_HPP_INCLUDED

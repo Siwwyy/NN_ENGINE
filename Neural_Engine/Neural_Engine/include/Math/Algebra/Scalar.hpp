@@ -12,8 +12,7 @@ namespace NN
 	{
 		namespace Algebra
 		{
-			
-			template<typename T = float, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
+			template <typename T = float, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
 			class Scalar
 			{
 			private:
@@ -30,7 +29,7 @@ namespace NN
 			public:
 
 				constexpr Scalar();
-				constexpr Scalar(const value_type scalar_value);
+				constexpr Scalar(value_type scalar_value);
 
 				NODISCARD constexpr operator value_type() const noexcept;
 
@@ -45,16 +44,16 @@ namespace NN
 				NODISCARD constexpr bool operator==(const_type rhs) const noexcept;
 				NODISCARD constexpr bool operator!=(const_type rhs) const noexcept;
 
-				constexpr Scalar& operator+=(const Scalar rhs) noexcept;
-				constexpr Scalar& operator-=(const Scalar rhs) noexcept;
-				constexpr Scalar& operator*=(const Scalar rhs) noexcept;
-				constexpr Scalar& operator/=(const Scalar rhs) noexcept;
-				NODISCARD constexpr bool operator<(const Scalar rhs) const noexcept;
-				NODISCARD constexpr bool operator>(const Scalar rhs) const noexcept;
-				NODISCARD constexpr bool operator<=(const Scalar rhs) const noexcept;
-				NODISCARD constexpr bool operator>=(const Scalar rhs) const noexcept;
-				NODISCARD constexpr bool operator==(const Scalar rhs) const noexcept;
-				NODISCARD constexpr bool operator!=(const Scalar rhs) const noexcept;
+				constexpr Scalar& operator+=(Scalar rhs) noexcept;
+				constexpr Scalar& operator-=(Scalar rhs) noexcept;
+				constexpr Scalar& operator*=(Scalar rhs) noexcept;
+				constexpr Scalar& operator/=(Scalar rhs) noexcept;
+				NODISCARD constexpr bool operator<(Scalar rhs) const noexcept;
+				NODISCARD constexpr bool operator>(Scalar rhs) const noexcept;
+				NODISCARD constexpr bool operator<=(Scalar rhs) const noexcept;
+				NODISCARD constexpr bool operator>=(Scalar rhs) const noexcept;
+				NODISCARD constexpr bool operator==(Scalar rhs) const noexcept;
+				NODISCARD constexpr bool operator!=(Scalar rhs) const noexcept;
 
 				NODISCARD friend constexpr Scalar operator+(Scalar lhs, const_type rhs) noexcept { return lhs += rhs; }
 				NODISCARD friend constexpr Scalar operator-(Scalar lhs, const_type rhs) noexcept { return lhs -= rhs; }
@@ -71,24 +70,28 @@ namespace NN
 				NODISCARD friend constexpr Scalar operator*(Scalar lhs, Scalar rhs) noexcept { return lhs *= rhs; }
 				NODISCARD friend constexpr Scalar operator/(Scalar lhs, Scalar rhs) noexcept { return lhs /= rhs; }
 
-				friend std::ostream& operator<<(std::ostream& lhs, const Scalar& rhs) { return lhs << rhs.scalar_value << '\n'; }
+				friend std::ostream& operator<<(std::ostream& lhs, const Scalar& rhs)
+				{
+					return lhs << rhs.scalar_value << '\n';
+				}
 
 				NODISCARD constexpr value_type Get_Scalar_Value() const;
-
 			};
 
 			template <typename T, typename T0>
-			inline constexpr Scalar<T, T0>::Scalar() :
+			constexpr Scalar<T, T0>::Scalar() :
 				scalar_value(static_cast<T>(0.f))
-			{ }
+			{
+			}
 
 			template <typename T, typename T0>
-			inline constexpr Scalar<T, T0>::Scalar(const T scalar_value) :
+			constexpr Scalar<T, T0>::Scalar(const T scalar_value) :
 				scalar_value(scalar_value)
-			{ }
+			{
+			}
 
-			template<typename T, typename T0>
-			inline constexpr Scalar<T, T0>::operator value_type() const noexcept
+			template <typename T, typename T0>
+			constexpr Scalar<T, T0>::operator value_type() const noexcept
 			{
 				return scalar_value;
 			}
@@ -226,7 +229,6 @@ namespace NN
 			{
 				return scalar_value;
 			}
-
 		}
 	}
 }

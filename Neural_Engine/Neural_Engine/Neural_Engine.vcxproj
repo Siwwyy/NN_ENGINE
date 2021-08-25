@@ -117,7 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Neural_Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,8 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\NN_CORE\NN_Storage_System\NN_Flatten.cpp" />
     <ClCompile Include="src\Math\Loss_Functions\SEF.cpp" />
-    <ClCompile Include="src\Core\NN_AutoGrad\NN_AutoGrad.cpp" />
+    <ClCompile Include="src\Core\NN_CORE\NN_AutoGrad\NN_AutoGrad.cpp" />
     <ClCompile Include="src\Core\Layers\Layer_Base.cpp" />
     <ClCompile Include="src\Math\Loss_Functions\Loss_Function_Base.cpp" />
     <ClCompile Include="src\Math\Loss_Functions\MSE.cpp" />
@@ -160,11 +161,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Math\Algebra\Matrix.cpp" />
     <ClCompile Include="src\Math\Activation_Functions\Activation_Function_Base.cpp" />
-    <ClCompile Include="src\Math\Algebra\Vector.cpp" />
+    <ClCompile Include="src\Math\Algebra\Tensor.cpp" />
     <ClCompile Include="src\Math\Utils\Math_Utils.cpp" />
     <ClCompile Include="src\Math\Utils\Random.cpp" />
+    <ClCompile Include="src\Math\Algebra\Tensor_Flatten.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Core\NN_CORE\NN_Storage_System\NN_Flatten.hpp" />
     <ClInclude Include="include\Core\Layers\Layer_Base.hpp" />
     <ClInclude Include="include\Model.hpp" />
     <ClInclude Include="include\Math\Activation_Functions\Identity_Function.hpp" />
@@ -175,14 +178,15 @@
     <ClInclude Include="include\Math\Activation_Functions\ReLu.hpp" />
     <ClInclude Include="include\Math\Algebra\Matrix.hpp" />
     <ClInclude Include="include\Math\Algebra\Scalar.hpp" />
-    <ClInclude Include="include\Math\Algebra\Vector.hpp" />
+    <ClInclude Include="include\Math\Algebra\Tensor.hpp" />
     <ClInclude Include="include\Math\Utils\Math_Utils.hpp" />
     <ClInclude Include="include\Math\Activation_Functions\Sigmoid.hpp" />
     <ClInclude Include="include\Math\Loss_Functions\MSE.hpp" />
     <ClInclude Include="include\Math\Utils\Random.hpp" />
     <ClInclude Include="include\Math\Loss_Functions\Loss_Function_Base.hpp" />
-    <ClInclude Include="include\Core\NN_AutoGrad\NN_AutoGrad.hpp" />
+    <ClInclude Include="include\Core\NN_CORE\NN_AutoGrad\NN_AutoGrad.hpp" />
     <ClInclude Include="include\Math\Loss_Functions\SEF.hpp" />
+    <ClInclude Include="include\Math\Algebra\Tensor_Flatten.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

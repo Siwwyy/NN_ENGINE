@@ -12,8 +12,7 @@ namespace NN
 	{
 		namespace Activation_Functions
 		{
-
-			template<typename T>
+			template <typename T>
 			class Identity_Function_impl : public Activation_Function_Base<T>
 			{
 			public:
@@ -34,21 +33,19 @@ namespace NN
 			}
 
 
-			template<typename T>
+			template <typename T>
 			class Identity_Function_fn
 			{
 			public:
-				
+
 				std::unique_ptr<Identity_Function_impl<T>> operator()() const
 				{
 					return std::make_unique<Identity_Function_impl<T>>();
 				}
-				
 			};
 
-			template<typename T>
+			template <typename T>
 			inline constexpr Identity_Function_fn<T> Identity_Function;
-			
 		}
 	}
 }

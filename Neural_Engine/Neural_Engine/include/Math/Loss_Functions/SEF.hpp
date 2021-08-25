@@ -11,30 +11,46 @@ namespace NN
 	{
 		namespace Loss_Functions
 		{
-
-			template<typename T>
+			template <typename T>
 			class SEF_impl : public Loss_Function_Base<T>
 			{
 			public:
+				typename Loss_Function_Base<T>::Return_Type f(Algebra::Tensor_Arithmetic<T> value,
+				                                              Algebra::Tensor_Arithmetic<T> target) noexcept override;
+				typename Loss_Function_Base<T>::Return_Type d_f(Algebra::Tensor_Arithmetic<T> value,
+				                                                Algebra::Tensor_Arithmetic<T> target) noexcept override;
 
-				virtual T f(T value, T target) noexcept override;
-				virtual T d_f(T value, T target) noexcept override;
-
+				//virtual T f(T value, T target) noexcept override;
+				//virtual T d_f(T value, T target) noexcept override;
 			};
 
+			//template <typename T>
+			//T SEF_impl<T>::f(T value, T target) noexcept
+			//{
+			//	return 0.5f * NN::Math::Utils::pow((target - value), 2);
+			//}
+
+			//template <typename T>
+			//T SEF_impl<T>::d_f(T value, T target) noexcept
+			//{
+			//	return -1.f * (target - value);
+			//}
+
 			template <typename T>
-			T SEF_impl<T>::f(T value, T target) noexcept
+			typename Loss_Function_Base<T>::Return_Type SEF_impl<T>::f(Algebra::Tensor_Arithmetic<T> value,
+			                                                           Algebra::Tensor_Arithmetic<T> target) noexcept
 			{
-				return 0.5f * NN::Math::Utils::pow((target - value), 2);
+				return {};
 			}
 
 			template <typename T>
-			T SEF_impl<T>::d_f(T value, T target) noexcept
+			typename Loss_Function_Base<T>::Return_Type SEF_impl<T>::d_f(Algebra::Tensor_Arithmetic<T> value,
+			                                                             Algebra::Tensor_Arithmetic<T> target) noexcept
 			{
-				return -1.f * (target - value);
+				return {};
 			}
 
-			template<typename T>
+			template <typename T>
 			class SEF_fn
 			{
 			public:
@@ -43,12 +59,10 @@ namespace NN
 				{
 					return std::make_unique<SEF_impl<T>>();
 				}
-
 			};
 
-			template<typename T>
+			template <typename T>
 			inline constexpr SEF_fn<T> SEF;
-			
 		}
 	}
 }
