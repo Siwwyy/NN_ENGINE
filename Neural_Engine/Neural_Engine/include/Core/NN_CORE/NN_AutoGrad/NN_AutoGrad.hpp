@@ -7,8 +7,11 @@ namespace NN
 {
 	namespace Core
 	{
-		namespace NN_AutoGrad
+		namespace NN_CORE
 		{
+			namespace NN_AutoGrad
+			{
+			}
 		}
 	}
 }

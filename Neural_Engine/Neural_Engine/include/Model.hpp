@@ -4,7 +4,7 @@
 
 #include <type_traits>
 
-#include "Math/Algebra/Vector.hpp"
+#include "Math/Algebra/Tensor.hpp"
 #include "Math/Loss_Functions/Loss_Function_Base.hpp"
 
 #include "Core/Layers/Layer_Base.hpp"
@@ -18,7 +18,7 @@ namespace NN
 		{
 		private:
 
-			Math::Algebra::Vector<Core::Layers::Layer_Base<T>*> layers;
+			Math::Algebra::Tensor<Core::Layers::Layer_Base<T>*> layers;
 
 			std::unique_ptr<Math::Activation_Functions::Activation_Function_Base<T>> act_function;
 			std::unique_ptr<Math::Loss_Functions::Loss_Function_Base<T>> loss_function;
@@ -26,8 +26,8 @@ namespace NN
 			//std::shared_ptr<NN::Math::Algebra::Vector_Arithmetic<T>> train_data;
 			//std::shared_ptr<NN::Math::Algebra::Vector_Arithmetic<T>> test_data;
 
-			Math::Algebra::Vector_Arithmetic<T>* train_data;
-			Math::Algebra::Vector_Arithmetic<T>* test_data;
+			Math::Algebra::Tensor_Arithmetic<T>* train_data;
+			Math::Algebra::Tensor_Arithmetic<T>* test_data;
 
 
 			void generate_connections() noexcept;
@@ -49,8 +49,8 @@ namespace NN
 			void compile(std::unique_ptr<U> loss_function);
 
 			//Rethink about many declarations and then definitions like e.g for shared ptr references etc.
-			void learn(Math::Algebra::Vector_Arithmetic<T>* training_data,
-			           Math::Algebra::Vector_Arithmetic<T>* test_data);
+			void learn(Math::Algebra::Tensor_Arithmetic<T>* training_data,
+			           Math::Algebra::Tensor_Arithmetic<T>* test_data);
 		};
 
 		template <typename T, typename T0>
@@ -102,8 +102,8 @@ namespace NN
 			const std::size_t layers_amount = layers.size();
 
 			//Batch
-			auto output = NN::Math::Algebra::Vector_Arithmetic<T>{};
-			auto Total_Error = NN::Math::Algebra::Vector_Arithmetic<T>{};
+			auto output = NN::Math::Algebra::Tensor_Arithmetic<T>{};
+			auto Total_Error = NN::Math::Algebra::Tensor_Arithmetic<T>{};
 			for (const auto& elem : *train_data)
 			{
 				output = elem;
@@ -146,8 +146,8 @@ namespace NN
 		}
 
 		template <typename T, typename T0>
-		void Model<T, T0>::learn(Math::Algebra::Vector_Arithmetic<T>* const training_data,
-		                         Math::Algebra::Vector_Arithmetic<T>* const test_data)
+		void Model<T, T0>::learn(Math::Algebra::Tensor_Arithmetic<T>* const training_data,
+		                         Math::Algebra::Tensor_Arithmetic<T>* const test_data)
 		{
 			//this->train_data = std::make_shared<NN::Math::Algebra::Vector_Arithmetic<T>>(training_data);
 			//this->test_data = std::make_shared<NN::Math::Algebra::Vector_Arithmetic<T>>(test_data);

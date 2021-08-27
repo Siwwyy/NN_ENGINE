@@ -16,10 +16,10 @@ namespace NN
 			class MSE_impl : public Loss_Function_Base<T>
 			{
 			public:
-				typename Loss_Function_Base<T>::Return_Type f(Algebra::Vector_Arithmetic<T> value,
-				                                              Algebra::Vector_Arithmetic<T> target) noexcept override;
-				typename Loss_Function_Base<T>::Return_Type d_f(Algebra::Vector_Arithmetic<T> value,
-				                                                Algebra::Vector_Arithmetic<T> target) noexcept override;
+				typename Loss_Function_Base<T>::Return_Type f(Algebra::Tensor_Arithmetic<T> value,
+				                                              Algebra::Tensor_Arithmetic<T> target) noexcept override;
+				typename Loss_Function_Base<T>::Return_Type d_f(Algebra::Tensor_Arithmetic<T> value,
+				                                                Algebra::Tensor_Arithmetic<T> target) noexcept override;
 
 				//virtual T f(T value, T target) noexcept override;
 				//virtual T d_f(T value, T target) noexcept override;
@@ -38,16 +38,16 @@ namespace NN
 			//}
 
 			template <typename T>
-			typename Loss_Function_Base<T>::Return_Type MSE_impl<T>::f(Algebra::Vector_Arithmetic<T> value,
-			                                                           Algebra::Vector_Arithmetic<T> target) noexcept
+			typename Loss_Function_Base<T>::Return_Type MSE_impl<T>::f(Algebra::Tensor_Arithmetic<T> value,
+			                                                           Algebra::Tensor_Arithmetic<T> target) noexcept
 			{
 				typename Loss_Function_Base<T>::Return_Type Loss_Values{};
 				return Loss_Values;
 			}
 
 			template <typename T>
-			typename Loss_Function_Base<T>::Return_Type MSE_impl<T>::d_f(Algebra::Vector_Arithmetic<T> value,
-			                                                             Algebra::Vector_Arithmetic<T> target) noexcept
+			typename Loss_Function_Base<T>::Return_Type MSE_impl<T>::d_f(Algebra::Tensor_Arithmetic<T> value,
+			                                                             Algebra::Tensor_Arithmetic<T> target) noexcept
 			{
 				typename Loss_Function_Base<T>::Return_Type Loss_Values{};
 				return Loss_Values;
@@ -66,6 +66,7 @@ namespace NN
 
 			template <typename T>
 			inline constexpr MSE_fn<T> MSE;
+			
 		}
 	}
 }

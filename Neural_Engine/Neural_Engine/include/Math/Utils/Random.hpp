@@ -9,7 +9,7 @@
 
 #include "Core/Defines/Defines_Func_Attributes.hpp"
 #include "Math/Algebra/Scalar.hpp"
-#include "Math/Algebra/Vector.hpp"
+#include "Math/Algebra/Tensor.hpp"
 
 
 namespace NN
@@ -30,14 +30,14 @@ namespace NN
 
 			//Rethink, adding everywhere Scalar<T> instead of T, or overloads for Scalar<T> and T
 			template <typename T = float>
-			NODISCARD constexpr Algebra::Vector<T> generate_random_numbersF(T min, T max, const std::size_t num)
+			NODISCARD constexpr Algebra::Tensor<T> generate_random_numbersF(T min, T max, const std::size_t num)
 			{
 				static_assert(std::is_floating_point_v<T>, "Type of template T has to be float or double");
 				std::random_device random_seed;
 				std::mt19937 random_generator(random_seed());
 				const std::uniform_real_distribution<T> distribution(min, max);
 
-				auto random_values = Algebra::Vector<T>(num);
+				auto random_values = Algebra::Tensor<T>(num);
 				auto random_floating_points = [&] { return distribution(random_generator); };
 				std::generate_n(random_values.begin(), num, random_floating_points);
 				return random_values;
@@ -64,14 +64,14 @@ namespace NN
 			}
 
 			template <typename T = int>
-			NODISCARD constexpr Algebra::Vector<T> generate_random_numbersI(T min, T max, const std::size_t num)
+			NODISCARD constexpr Algebra::Tensor<T> generate_random_numbersI(T min, T max, const std::size_t num)
 			{
 				static_assert(std::is_integral_v<T>, "Type of template T has to be integer, not floating point");
 				std::random_device random_seed;
 				std::mt19937 random_generator(random_seed());
 				const std::uniform_int_distribution<T> distribution(min, max);
 
-				auto random_values = Algebra::Vector<T>(num);
+				auto random_values = Algebra::Tensor<T>(num);
 				auto random_integer_points = [&] { return distribution(random_generator); };
 				std::generate_n(random_values.begin(), num, random_integer_points);
 				return random_values;

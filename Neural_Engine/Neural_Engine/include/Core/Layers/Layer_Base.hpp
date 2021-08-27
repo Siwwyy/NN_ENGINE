@@ -4,7 +4,7 @@
 
 #include <type_traits>
 
-#include "Math/Algebra/Vector.hpp"
+#include "Math/Algebra/Tensor.hpp"
 #include "Math/Activation_Functions/Activation_Function_Base.hpp"
 #include "Math/Utils/Math_Utils.hpp"
 
@@ -24,9 +24,9 @@ namespace NN
 
 				const std::size_t neurons_amount;
 
-				Math::Algebra::Vector_Arithmetic<T> weights;
-				Math::Algebra::Vector_Arithmetic<T> biases;
-				Math::Algebra::Vector_Arithmetic<T> states;
+				Math::Algebra::Tensor_Arithmetic<T> weights;
+				Math::Algebra::Tensor_Arithmetic<T> biases;
+				Math::Algebra::Tensor_Arithmetic<T> states;
 
 				std::unique_ptr<Math::Activation_Functions::Activation_Function_Base<T>> activation_function;
 
@@ -34,12 +34,12 @@ namespace NN
 				Layer_Base() = delete;
 				template <typename U>
 				constexpr Layer_Base(std::size_t neurons_amount, std::unique_ptr<U> activation_function,
-				                     Math::Algebra::Vector_Arithmetic<T> weights = {},
-				                     Math::Algebra::Vector_Arithmetic<T> biases = {}) noexcept;
+				                     Math::Algebra::Tensor_Arithmetic<T> weights = {},
+				                     Math::Algebra::Tensor_Arithmetic<T> biases = {}) noexcept;
 				constexpr Layer_Base(const Layer_Base& Object);
 				constexpr Layer_Base(Layer_Base&& Object) noexcept;
 
-				virtual Math::Algebra::Vector_Arithmetic<T> forward(Math::Algebra::Vector_Arithmetic<T>* input) noexcept = 0;
+				virtual Math::Algebra::Tensor_Arithmetic<T> forward(Math::Algebra::Tensor_Arithmetic<T>* input) noexcept = 0;
 				virtual void backward() noexcept = 0;
 
 				Layer_Base& operator=(const Layer_Base& Object);
@@ -87,8 +87,8 @@ namespace NN
 			template <typename U>
 			constexpr Layer_Base<T, T0>::Layer_Base(const std::size_t neurons_amount,
 			                                        std::unique_ptr<U> activation_function,
-			                                        Math::Algebra::Vector_Arithmetic<T> weights,
-			                                        Math::Algebra::Vector_Arithmetic<T> biases) noexcept :
+			                                        Math::Algebra::Tensor_Arithmetic<T> weights,
+			                                        Math::Algebra::Tensor_Arithmetic<T> biases) noexcept :
 				neurons_amount(neurons_amount),
 				weights(std::move(weights)),
 				biases(std::move(biases)),

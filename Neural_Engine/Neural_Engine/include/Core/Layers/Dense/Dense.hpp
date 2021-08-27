@@ -24,8 +24,8 @@ namespace NN
 				constexpr Dense(const Dense& Object);
 				constexpr Dense(Dense&& Object) noexcept;
 
-				virtual Math::Algebra::Vector_Arithmetic<T>
-				forward(Math::Algebra::Vector_Arithmetic<T>* input) noexcept override;
+				virtual Math::Algebra::Tensor_Arithmetic<T>
+				forward(Math::Algebra::Tensor_Arithmetic<T>* input) noexcept override;
 				void backward() noexcept override;
 
 				~Dense() override = default;
@@ -51,10 +51,10 @@ namespace NN
 			}
 
 			template <typename T>
-			Math::Algebra::Vector_Arithmetic<T> Dense<T>::forward(
-				Math::Algebra::Vector_Arithmetic<T>* input) noexcept
+			Math::Algebra::Tensor_Arithmetic<T> Dense<T>::forward(
+				Math::Algebra::Tensor_Arithmetic<T>* input) noexcept
 			{
-				auto output = Math::Algebra::Vector_Arithmetic<T>(this->get_neurons_amount());
+				auto output = Math::Algebra::Tensor_Arithmetic<T>(this->get_neurons_amount());
 
 				for (std::size_t i = 0; i < this->get_neurons_amount(); ++i)
 				{

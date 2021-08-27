@@ -9,7 +9,7 @@
 #include <random>
 
 #include "Math/Algebra/Scalar.hpp"
-#include "Math/Algebra/Vector.hpp"
+#include "Math/Algebra/Tensor.hpp"
 
 
 #include "Core/Defines/Defines_Assert.hpp"
@@ -32,7 +32,7 @@ namespace NN
 			}
 
 			template <typename T>
-			NODISCARD constexpr Algebra::Scalar<T> min(Algebra::Vector<T> vector_t) noexcept
+			NODISCARD constexpr Algebra::Scalar<T> min(Algebra::Tensor<T> vector_t) noexcept
 			{
 				if (vector_t.size() == 0)
 				{
@@ -61,7 +61,7 @@ namespace NN
 			}
 
 			template <typename T>
-			NODISCARD constexpr Algebra::Scalar<T> max(Algebra::Vector<T> vector_t) noexcept
+			NODISCARD constexpr Algebra::Scalar<T> max(Algebra::Tensor<T> vector_t) noexcept
 			{
 				if (vector_t.size() == 0)
 				{
@@ -93,13 +93,13 @@ namespace NN
 			}
 
 			template <typename T>
-			NODISCARD Algebra::Vector_Arithmetic<T> generate_weights(const size_t size)
+			NODISCARD Algebra::Tensor_Arithmetic<T> generate_weights(const size_t size)
 			{
 				std::random_device random_seed;
 				std::mt19937 random_generator(random_seed());
 				const std::uniform_real_distribution<float> distribution(0.05f, 0.95f);
 
-				auto weights = Algebra::Vector_Arithmetic<T>(size);
+				auto weights = Algebra::Tensor_Arithmetic<T>(size);
 				auto random_float = [&] { return distribution(random_generator); };
 				std::generate_n(weights.begin(), size, random_float);
 				return weights;
