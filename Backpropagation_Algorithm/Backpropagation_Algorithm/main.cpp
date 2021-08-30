@@ -65,7 +65,7 @@ public:
 	{ }
 
 	Linear(const std::size_t amount_of_neurons, type(*activation_function_ptr)(const type) = &id, std::initializer_list<type> w = {}, std::initializer_list<type> b = {}) :
-		weights(w.size() ? w : generate_weight_list(amount_of_neurons * amount_of_neurons)),	//make weights/connections creation by model, here it is hardcoded, but in future, it should be generated automatically by model, e.g., 2 neurons -> 3 neurons, then 2*3 weights. In Model: init_weights() -> for loop (n_layers - 1), avoid connections inside the output layer, e.g., Linear(layer[i+1].n_neurons * layer[i].n_neurons <- current)
+		weights(w.size() ? w : generate_weight_list(amount_of_neurons)),	//make weights/connections creation by model, here it is hardcoded, but in future, it should be generated automatically by model, e.g., 2 neurons -> 3 neurons, then 2*3 weights. In Model: init_weights() -> for loop (n_layers - 1), avoid connections inside the output layer, e.g., Linear(layer[i+1].n_neurons * layer[i].n_neurons <- current)
 		biases(b.size() ? b : std::vector<type>(amount_of_neurons, -1.f)),
 		n_neurons(amount_of_neurons),
 		activation_function_ptr(activation_function_ptr)
@@ -100,6 +100,7 @@ public:
 	Model(std::initializer_list<Linear> layers) :
 		layers(layers)
 	{
+		assert( layers.size() > 0, "Model can't be empty! No Layers added");
 		initialize_connections();
 	}
 
@@ -195,12 +196,12 @@ auto MSE(const std::vector<type>& y, const std::vector<type>& Y) -> std::vector<
 	assert(y.size() == Y.size(), "Output size has to be equal to Targets Size");
 
 	const std::size_t vec_size = y.size();
-	const type mean_divided = 1.f / static_cast<type>(vec_size); // 1/n
+	const type mean_divider = 1.f / static_cast<type>(vec_size); // 1/n
 	std::vector<type> output(vec_size);
 
 	for (std::size_t i = 0; i < vec_size; ++i)
 	{
-		output[i] = mean_divided * std::powf((y[i] - Y[i]), 2);
+		output[i] = mean_divider * std::powf((y[i] - Y[i]), 2);
 	}
 
 	return output;
@@ -282,6 +283,7 @@ std::size_t Linear::Get_n_neurons() const
 void Model::initialize_connections()
 {
 	const std::size_t layer_amount = layers.size();
+	layers[0].generate_connections(layers[0].Get_n_neurons() * layers[1].Get_n_neurons());
 	for (std::size_t i = 1; i < layer_amount; ++i)
 	{
 		const std::size_t amount_of_connections = layers[i - 1].Get_n_neurons() * layers[i].Get_n_neurons();
