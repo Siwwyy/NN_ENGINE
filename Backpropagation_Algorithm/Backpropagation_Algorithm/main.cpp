@@ -71,7 +71,6 @@ public:
 		activation_function_ptr(activation_function_ptr)
 	{ }
 
-
 	Linear(const Linear& Object) = default;
 	Linear(Linear&& Object) = default;
 	Linear& operator=(const Linear& Object) = default;
@@ -152,8 +151,8 @@ int main(int argc, char* argv[])
 		////custom weights and biases to check correctness of results
 		//Linear(2, &sigm, { 0.15f, 0.20f, 0.25f, 0.30f }, { 0.35f, 0.35f }),
 		//Linear(2, &sigm, {0.40f, 0.45f, 0.50f, 0.55f }, { 0.60f, 0.60f })
-		//weights generated automatically
-		Linear(2, &sigm),
+		//weights and biases generated automatically
+		Linear(2, &sigm),	//Add weights connection correctness checking
 		Linear(2, &sigm)
 		});
 
@@ -283,9 +282,9 @@ std::size_t Linear::Get_n_neurons() const
 void Model::initialize_connections()
 {
 	const std::size_t layer_amount = layers.size();
-	for (std::size_t i = layer_amount - 1; i < layer_amount - 1; ++i)
+	for (std::size_t i = 1; i < layer_amount; ++i)
 	{
-		const std::size_t amount_of_connections = layers[i].Get_n_neurons() * layers[i + 1].Get_n_neurons();
+		const std::size_t amount_of_connections = layers[i - 1].Get_n_neurons() * layers[i].Get_n_neurons();
 		layers[i].generate_connections(amount_of_connections);
 	}
 }
@@ -294,10 +293,13 @@ auto Model::forward(const std::vector<type>* const input_ptr) -> std::vector<typ
 {
 	auto out = *input_ptr;
 	const std::size_t layer_amount = layers.size();
-	for (std::size_t i = 0; i < layer_amount; ++i)
+	if (layer_amount)
 	{
-		out = layers[i].forward(std::move(out));
+		assert(out.size() == layers[0].Get_n_neurons(), "Input vector size != First layer neuron's amount");
+		for (std::size_t i = 0; i < layer_amount; ++i)
+		{
+			out = layers[i].forward(std::move(out));
+		}
 	}
-
 	return out;
 }
