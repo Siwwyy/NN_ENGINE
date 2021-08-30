@@ -429,9 +429,35 @@ bool gradient_correctness()
 	return true;
 }
 
-void forward(type * input, type * output, const std::unique_ptr<type[]>& w, type * biases)
+void forward(type * t, type output[1][2], const std::unique_ptr<type[]>& w, type * biases, type* out_h, type* out_o)
 {
+	constexpr size_t I = 2;	//2 Input layers
+	constexpr size_t J = 2;	//2 Hidden layers
+	constexpr size_t K = 2;	//2 Output layers
+	type E_Iter{};
 	
+	for (std::size_t o = 0; o < K; ++o)
+	{
+		type net_o{};
+		for (std::size_t h = 0; h < J; ++h)
+		{
+			type net_h{};
+			for (std::size_t i = 0; i < I; ++i)
+			{
+				const std::size_t w_id_i = i + h * J;
+				net_h += w[w_id_i] * t[i];
+			}
+			net_h += biases[h];
+			out_h[h] = sigm(net_h);
+
+			const std::size_t w_id_h = o * K + (K * J + h);
+			net_o += w[w_id_h] * out_h[h];
+		}
+		net_o += biases[o + J];
+		out_o[o] = sigm(net_o);
+
+		E_Iter += 0.5f * std::powf((output[0][o] - out_o[o]), 2);
+	}
 }
 
 
@@ -442,7 +468,7 @@ int main(int argc, char* argv[])
 	constexpr size_t T = arr_size(input); //amount of associations
 	//Targets
 	type targets[][2] = { {0.01f, 0.99f} };
-	//Amounts of layer in network, network properties
+	//Amounts of layer in network, net		ork properties
 	constexpr size_t I = 2;	//2 Input layers
 	constexpr size_t J = 2;	//2 Hidden layers
 	constexpr size_t K = 2;	//2 Output layers
@@ -457,9 +483,6 @@ int main(int argc, char* argv[])
 	//type biases[] = { 0.35f, 0.35f, 0.60f, 0.60f };
 	type biases[] = { 1.f, 1.f, 1.5f, 1.5f };
 
-
-
-	type* WYJSCIE = new type[K]{};
 	
 	type Total_Error{};
 	for (size_t iter = 0; iter < iterations; ++iter)
@@ -496,7 +519,7 @@ int main(int argc, char* argv[])
 				E_Iter += 0.5f * std::powf((targets[0][o] - out_o[o]), 2);
 			}
 
-
+			//forward(t, targets, w, biases, out_h, out_o);
 
 			
 			//Backpropagation
@@ -599,9 +622,6 @@ int main(int argc, char* argv[])
 
 	std::cout << "Total error: " << Total_Error << '\n';
 
-
-	
-	delete[] WYJSCIE;
 	
 	system("pause");
 	return EXIT_SUCCESS;
