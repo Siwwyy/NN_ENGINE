@@ -22,6 +22,7 @@ auto sigm(const type x)->type;
 auto d_sigm(const type x)->type;
 
 auto MSE(const std::vector<type>& y, const std::vector<type>& Y)->std::vector<type>;
+auto d_MSE(const std::vector<type>& y, const std::vector<type>& Y)->std::vector<type>;
 
 type id(const type x);
 type d_id(const type x);
@@ -30,6 +31,7 @@ type generate_weight_value();
 std::vector<type> generate_weight_list(const size_t size);
 
 
+std::vector<type> Grad_E;
 
 class AutoGrad
 {
@@ -52,6 +54,7 @@ private:
 	std::vector<type> biases{};
 	std::size_t n_neurons{};
 	type(*activation_function_ptr)(const type) {};
+	type(*d_activation_function_ptr)(const type) {}; //currently hardcoded, but in future, it will work with polymorphism
 
 public:
 	Linear();
@@ -65,7 +68,8 @@ public:
 	void generate_connections(const std::size_t new_amount);
 
 	[[nodiscard]] auto forward(const std::vector<type>* const input_ptr)->std::vector<type>;
-	//auto backward()->std::vector<type>; //TBD
+	//[[nodiscard]] auto backward(std::vector<type>&& deltas = { 0.f })->std::vector<type>;
+	std::vector<type> backward(std::vector<type>&& deltas = { 0.f });
 
 	inline std::size_t Get_n_neurons() const;
 	inline std::size_t Get_n_connections() const;
@@ -91,6 +95,8 @@ public:
 	Model& operator=(Model&& Object) = default;
 
 	[[nodiscard]] auto forward(const std::vector<type>* const input_ptr)->std::vector<type>;
+	//[[nodiscard]] auto backward(const std::vector<type>* const input_ptr)->std::vector<type>;
+	void backward(std::vector<type>&& deltas = { 0.f });
 
 	~Model() = default;
 };
@@ -124,30 +130,30 @@ int main(int argc, char* argv[])
 
 
 	//Model by class
-		//Inputs
+	//Inputs
 	const std::vector<type> in = { 0.05f, 0.10f };
 	//Targets
 	const std::vector<type> targets = { 0.01f, 0.99f };
 
 	Model obj = Model({
-		////custom weights and biases to check correctness of results
-		//Linear(2, &sigm, { 0.15f, 0.20f, 0.25f, 0.30f }, { 0.35f, 0.35f }),
-		//Linear(2, &sigm, {0.40f, 0.45f, 0.50f, 0.55f }, { 0.60f, 0.60f })
-		//weights and biases generated automatically
-		Linear(2, &sigm),	//Add weights connection correctness checking
-		Linear(2, &sigm)
-	});
-
-	//auto d = Linear(2, &sigm);
-
-	//auto a = d.forward();
+		//custom weights and biases to check correctness of results
+		Linear(2, &sigm, { 0.15f, 0.20f, 0.25f, 0.30f }, { 0.35f, 0.35f }),
+		Linear(2, &sigm, {0.40f, 0.45f, 0.50f, 0.55f }, { 0.60f, 0.60f })
+		////weights and biases generated automatically
+		//Linear(2, &sigm),	//Add weights connection correctness checking
+		//Linear(2, &sigm)
+		});
 
 	const auto out = obj.forward(&in);
 
 	std::cout << "Y0: [ " << out[0] << " ] , Y1: [ " << out[1] << " ]\n";
 
 	auto Error = MSE(out, targets);
-	std::cout << "Error: " << std::accumulate(Error.begin(), Error.end(), 0.f) << '\n';
+	const auto total_error = std::accumulate(Error.begin(), Error.end(), 0.f);
+	std::cout << "Error: " << total_error << '\n';
+
+	//auto init_delta = d_MSE(out, targets) * d_sigm(out);
+	//obj.backward(init_delta);
 
 	system("pause");
 	return EXIT_SUCCESS;
@@ -202,6 +208,29 @@ auto MSE(const std::vector<type>& y, const std::vector<type>& Y) -> std::vector<
 	for (std::size_t i = 0; i < vec_size; ++i)
 	{
 		output[i] = mean_divider * std::powf((y[i] - Y[i]), 2);
+	}
+
+	return output;
+}
+
+/// <summary>
+/// Mean Squared Error derivative(MSE) = 1/n * ( Sum of [ 2*(y_pred - y_true) ] )
+/// </summary>
+/// <param name="y"> predicted values </param>
+/// <param name="Y"> target values </param>
+/// <returns> n-size (where n is equal to y and Y sizes, which are equal) vector with calculated loss between each of y and Y values </returns>
+auto d_MSE(const std::vector<type>& y, const std::vector<type>& Y) -> std::vector<type>
+{	//y -> output/ of neural network
+	//Y -> target value/s
+	assertm(y.size() == Y.size(), "Output size has to be equal to Targets Size");
+
+	const std::size_t vec_size = y.size();
+	const type mean_divider = 1.f / static_cast<type>(vec_size); // 1/n
+	std::vector<type> output(vec_size);
+
+	for (std::size_t i = 0; i < vec_size; ++i)
+	{
+		output[i] = mean_divider * 2 * (y[i] - Y[i]);
 	}
 
 	return output;
@@ -286,15 +315,24 @@ Linear::Linear() :
 /// <param name="activation_function_ptr"> function pointer to activation function. F(x) = x by default (identity function) </param>
 /// <param name="w"> custom weights values. If not specified, weights will be generated automatically in range of (0.f : 1.f), in amount of amount_of_neurons * amount_of_neurons </param>
 /// <param name="b"> custom biases values. If not specified, biases will be set to 1.f, in amount of amount_of_neurons </param>
-Linear::Linear(const std::size_t amount_of_neurons, type(* activation_function_ptr)(const type),
+Linear::Linear(const std::size_t amount_of_neurons, type(*activation_function_ptr)(const type),
 	std::initializer_list<type> w, std::initializer_list<type> b) :
 
 	weights(w.size() ? w : generate_weight_list(amount_of_neurons * amount_of_neurons)),
 	biases(b.size() ? b : std::vector<type>(amount_of_neurons, -1.f)),
 	n_neurons(amount_of_neurons),
 	activation_function_ptr(activation_function_ptr)
-{ }
-
+{
+	//HACK!! Remove later!
+	if (activation_function_ptr == sigm)
+	{
+		d_activation_function_ptr = &d_sigm;
+	}
+	else
+	{
+		d_activation_function_ptr = &d_id;
+	}
+}
 
 /// <summary>
 /// Generates new connections (weights amount)
@@ -309,10 +347,10 @@ void Linear::generate_connections(const std::size_t new_amount)
 /// Forward propagation of Linear layer (dot product)
 /// </summary>
 /// <param name="input_ptr"> input vector pointer. Size of vector has to be equal to amount_of_neurons! </param>
-/// <returns> Forward propagated input: [Sum of ( weights * input)] + bias </returns>
+/// <returns> Forward propagated input: [Sum of ( weights * input )] + bias </returns>
 auto Linear::forward(const std::vector<type>* const input_ptr) -> std::vector<type>
 {
-	assertm(input_ptr->size() == n_neurons, "Input vector size != layer neuron's amount");
+	assertm(input_ptr->size() * n_neurons == weights.size(), "Check connections amount! Input vector size != layer weights/connections amount");
 	std::vector<type> output(n_neurons);
 
 	for (std::size_t i = 0; i < n_neurons; ++i)
@@ -330,6 +368,20 @@ auto Linear::forward(const std::vector<type>* const input_ptr) -> std::vector<ty
 	}
 
 	return output;
+}
+
+auto Linear::backward(std::vector<type>&& deltas) -> std::vector<type>
+{
+	std::vector<type> output_deltas(n_neurons);
+
+	for (std::size_t i = 0; i < n_neurons; ++i)
+	{
+		for (std::size_t j = 0; j < deltas.size(); ++j)
+		{
+			//output_deltas[i] += deltas[j] * d_activation_function_ptr()
+		}
+	}
+	return output_deltas;
 }
 
 /// <summary>
@@ -366,7 +418,7 @@ void Model::validate_connections()
 	for (std::size_t i = 1; i < layer_amount; ++i)
 	{
 		const std::size_t amount_of_connections = layers[i - 1].Get_n_neurons() * layers[i].Get_n_neurons();
-		if(layers[i].Get_n_connections() != amount_of_connections)
+		if (layers[i].Get_n_connections() != amount_of_connections)
 		{
 			layers[i].generate_connections(amount_of_connections);
 		}
@@ -411,4 +463,14 @@ auto Model::forward(const std::vector<type>* const input_ptr) -> std::vector<typ
 		}
 	}
 	return out;
+}
+
+void Model::backward(std::vector<type>&& deltas)
+{
+	auto out = std::vector<type>{};	//always initialize to 1.f!!!
+	const std::size_t layer_amount = layers.size();
+	for (std::size_t i = 0; i < layer_amount; ++i)
+	{
+		out = layers[i].backward(std::move(out));
+	}
 }
