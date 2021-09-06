@@ -2,7 +2,6 @@
 #define DEFINES_ASSERT_HPP_INCLUDED
 
 
-
 /*
 	For assertion, bug reporting etc.
  */

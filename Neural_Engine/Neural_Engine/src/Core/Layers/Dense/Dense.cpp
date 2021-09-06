@@ -1,1 +1,1 @@
-#include "Layers/Dense/Dense.hpp"
+#include "Core/Layers/Dense/Dense.hpp"
