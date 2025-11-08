@@ -6,20 +6,18 @@
 
 namespace NN
 {
-	
 	namespace Math
 	{
-
-		template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
-		class Matrix
+		namespace Algebra
 		{
-		public:
-			Matrix();
-
-		};
-
+			template <typename T>
+			class Matrix
+			{
+			public:
+				Matrix();
+			};
+		}
 	}
-
 }
 
 #endif /* MATRIX_HPP_INCLUDED */

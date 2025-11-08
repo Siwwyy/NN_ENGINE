@@ -18,13 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\Activation_Functions\Activation_Function.cpp">
+    <ClCompile Include="src\Math\Activation_Functions\Activation_Function_Base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Math\Algebra\Matrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\Algebra\Vector.cpp">
+    <ClCompile Include="src\Math\Algebra\Tensor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Math\Algebra\Scalar.cpp">
@@ -51,15 +51,33 @@
     <ClCompile Include="src\Math\Utils\Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Math\Loss_Functions\Loss_Function_Base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Layers\Layer_Base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\NN_CORE\NN_AutoGrad\NN_AutoGrad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Loss_Functions\SEF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\NN_CORE\NN_Storage_System\NN_Flatten.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Algebra\Tensor_Flatten.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Math\Activation_Functions\Activation_Function.hpp">
+    <ClInclude Include="include\Math\Activation_Functions\Activation_Function_Base.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Math\Algebra\Matrix.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Math\Algebra\Vector.hpp">
+    <ClInclude Include="include\Math\Algebra\Tensor.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Math\Algebra\Scalar.hpp">
@@ -74,7 +92,7 @@
     <ClInclude Include="include\Core\Defines\Defines_Assert.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Layers\Dense\Dense.hpp">
+    <ClInclude Include="include\Core\Layers\Dense\Dense.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Math\Activation_Functions\Sigmoid.hpp">
@@ -95,7 +113,22 @@
     <ClInclude Include="include\Model.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Layers\Layer_Base.hpp">
+    <ClInclude Include="include\Core\Layers\Layer_Base.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Loss_Functions\Loss_Function_Base.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\NN_CORE\NN_AutoGrad\NN_AutoGrad.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Loss_Functions\SEF.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\NN_CORE\NN_Storage_System\NN_Flatten.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Algebra\Tensor_Flatten.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

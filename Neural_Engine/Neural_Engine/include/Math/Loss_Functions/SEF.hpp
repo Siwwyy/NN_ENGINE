@@ -1,10 +1,9 @@
-#ifndef MSE_FUNCTION_HPP_INCLUDED
-#define MSE_FUNCTION_HPP_INCLUDED
+#ifndef SEF_FUNCTION_HPP_INCLUDED
+#define SEF_FUNCTION_HPP_INCLUDED
 #pragma once
 
-#include <memory>
-
 #include "Math/Loss_Functions/Loss_Function_Base.hpp"
+#include "Math/Utils/Math_Utils.hpp"
 
 namespace NN
 {
@@ -13,7 +12,7 @@ namespace NN
 		namespace Loss_Functions
 		{
 			template <typename T>
-			class MSE_impl : public Loss_Function_Base<T>
+			class SEF_impl : public Loss_Function_Base<T>
 			{
 			public:
 				typename Loss_Function_Base<T>::Return_Type f(Algebra::Tensor_Arithmetic<T> value,
@@ -26,49 +25,46 @@ namespace NN
 			};
 
 			//template <typename T>
-			//T MSE_impl<T>::f(T value, T target) noexcept
+			//T SEF_impl<T>::f(T value, T target) noexcept
 			//{
-			//	return 0;
+			//	return 0.5f * NN::Math::Utils::pow((target - value), 2);
 			//}
 
 			//template <typename T>
-			//T MSE_impl<T>::d_f(T value, T target) noexcept
+			//T SEF_impl<T>::d_f(T value, T target) noexcept
 			//{
-			//	return 0;
+			//	return -1.f * (target - value);
 			//}
 
 			template <typename T>
-			typename Loss_Function_Base<T>::Return_Type MSE_impl<T>::f(Algebra::Tensor_Arithmetic<T> value,
+			typename Loss_Function_Base<T>::Return_Type SEF_impl<T>::f(Algebra::Tensor_Arithmetic<T> value,
 			                                                           Algebra::Tensor_Arithmetic<T> target) noexcept
 			{
-				typename Loss_Function_Base<T>::Return_Type Loss_Values{};
-				return Loss_Values;
+				return {};
 			}
 
 			template <typename T>
-			typename Loss_Function_Base<T>::Return_Type MSE_impl<T>::d_f(Algebra::Tensor_Arithmetic<T> value,
+			typename Loss_Function_Base<T>::Return_Type SEF_impl<T>::d_f(Algebra::Tensor_Arithmetic<T> value,
 			                                                             Algebra::Tensor_Arithmetic<T> target) noexcept
 			{
-				typename Loss_Function_Base<T>::Return_Type Loss_Values{};
-				return Loss_Values;
+				return {};
 			}
 
 			template <typename T>
-			class MSE_fn
+			class SEF_fn
 			{
 			public:
 
-				std::unique_ptr<MSE_impl<T>> operator()() const
+				std::unique_ptr<SEF_impl<T>> operator()() const
 				{
-					return std::make_unique<MSE_impl<T>>();
+					return std::make_unique<SEF_impl<T>>();
 				}
 			};
 
 			template <typename T>
-			inline constexpr MSE_fn<T> MSE;
-			
+			inline constexpr SEF_fn<T> SEF;
 		}
 	}
 }
 
-#endif /* MSE_FUNCTION_HPP_INCLUDED */
+#endif /* SEF_FUNCTION_HPP_INCLUDED */
